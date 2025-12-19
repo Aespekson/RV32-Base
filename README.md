@@ -8,6 +8,7 @@ The intent is explicitly not to be a production quality CPU. This is instead bei
  - Flat physical address space
  - Memory-mapped I/O
  - Likely Machine mode only
+
 Explicit non-goals include:
  - Out-of-order execution
  - A lot of caching behavior
