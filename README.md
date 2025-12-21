@@ -26,3 +26,10 @@ As mentioned above, RV32-Base is intended to function with a custom operating sy
 1. CPU (RV32-Base) [this repo](https://github.com/Aespekson/RV32-Base)
 2. OS (MOS) [here](https://github.com/Aespekson/MOS)
 3. Accelerator (RV32-Aux-Unit) [here](https://github.com/Aespekson/RV32-Aux-Unit)
+
+## Notes and Minor Points
+
+### Naming Standards
+Folders are capitalized and multiple words are adjoined by "_", as in "Instruct_Mem"
+Source code files are not capitalized and multiple words are adjoined by "_", as in "instruct_mem.v"
+Scripts are capitalized and multiple words are adjoined by " ", as in "Run Counter.sh"
