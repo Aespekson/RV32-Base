@@ -31,5 +31,7 @@ As mentioned above, RV32-Base is intended to function with a custom operating sy
 
 ### Naming Standards
 Folders are capitalized and multiple words are adjoined by "_", as in "Instruct_Mem"
+
 Source code files are not capitalized and multiple words are adjoined by "_", as in "instruct_mem.v"
+
 Scripts are capitalized and multiple words are adjoined by " ", as in "Run Counter.sh"
