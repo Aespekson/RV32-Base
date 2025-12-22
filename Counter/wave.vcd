@@ -1,5 +1,5 @@
 $date
-	Fri Dec 19 23:13:30 2025
+	Sat Dec 20 01:12:09 2025
 $end
 $version
 	Icarus Verilog
@@ -7,7 +7,7 @@ $end
 $timescale
 	1s
 $end
-$scope module tb $end
+$scope module standard $end
 $var wire 4 ! count [3:0] $end
 $var reg 1 " clk $end
 $var reg 1 # rst $end
