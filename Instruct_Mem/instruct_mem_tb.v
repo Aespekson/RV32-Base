@@ -18,34 +18,34 @@ module inst_mem_tb;
   );
 
   initial begin
+    // Dumps
+    $dumpfile("Instruct_Mem/wave.vcd");
+    $dumpvars;
+
+    //Checks
     #10;
     	`check(inst, 32'h00108113);
-    #10;
+    #5;
         addr = 32'h00000004;
-    #10;
+    #5;
     	`check(inst, 32'h00108193);
-    #10;
+    #5;
         addr = 32'h00000008;
-    #10;
+    #5;
     	`check(inst, 32'h00310233);
-    #10;
+    #5;
         addr = 32'h0000000c;
-    #10;
+    #5;
     	`check(inst, 32'hfe218ae3);
-    #10;
+    #5;
         addr = 32'h00000010;
-    #10;
+    #5;
         `check(inst, 32'h0000000);
     $finish;
   end
 
   always @* begin
     $display("time %2t, addr = %3h, inst = %8h", $time, addr, inst);
-  end
-
-  initial begin
-    $dumpfile("Instruct_Mem/wave.vcd");
-    $dumpvars;
   end
 
 endmodule

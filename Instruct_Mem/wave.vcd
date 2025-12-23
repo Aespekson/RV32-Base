@@ -1,5 +1,5 @@
 $date
-	Sun Dec 21 22:36:18 2025
+	Mon Dec 22 00:15:26 2025
 $end
 $version
 	Icarus Verilog
@@ -9,41 +9,43 @@ $timescale
 $end
 $scope module inst_mem_tb $end
 $var wire 32 ! inst [31:0] $end
-$var reg 10 " addr [9:0] $end
+$var parameter 32 " MEM_SIZE $end
+$var reg 10 # addr [9:0] $end
 $scope module dut $end
-$var wire 32 # i_addr [31:0] $end
-$var reg 32 $ o_inst [31:0] $end
+$var wire 33 $ i_addr [32:0] $end
+$var reg 32 % o_inst [31:0] $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
+b10000000000 "
 $end
 #0
 $dumpvars
-b100001000000100010011 $
+b100001000000100010011 %
+b0 $
 b0 #
-b0 "
 b100001000000100010011 !
 $end
-#20
+#15
 b100001000000110010011 !
-b100001000000110010011 $
+b100001000000110010011 %
+b100 $
 b100 #
-b100 "
-#40
+#25
 b1100010000001000110011 !
-b1100010000001000110011 $
+b1100010000001000110011 %
+b1000 $
 b1000 #
-b1000 "
-#60
+#35
 b11111110001000011000101011100011 !
-b11111110001000011000101011100011 $
+b11111110001000011000101011100011 %
+b1100 $
 b1100 #
-b1100 "
-#80
+#45
 b0 !
-b0 $
+b0 %
+b10000 $
 b10000 #
-b10000 "
-#90
+#50
