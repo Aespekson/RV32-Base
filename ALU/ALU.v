@@ -15,9 +15,9 @@
 
 module alu (
     input wire [5:0] i_alu_op,
-    input wire [`DATA_WIDTH-1:0] i_a,
-    input wire [`DATA_WIDTH-1:0] i_b,
-    output reg [`DATA_WIDTH-1:0] o_c
+    input wire [31:0] i_a,
+    input wire [31:0] i_b,
+    output reg [31:0] o_c
 );
 
     always @* begin
@@ -25,9 +25,9 @@ module alu (
             `OP_ALU_NOP:    o_c = ~i_a;
             `OP_ALU_ADD:    o_c = i_a + i_b;
             `OP_ALU_SUB:    o_c = i_a - i_b;
-            `OP_ALU_AND:    ;
-            `OP_ALU_OR:     ;
-            `OP_ALU_XOR:    ;
+            `OP_ALU_AND:    o_c = i_a&i_b;
+            `OP_ALU_OR:     o_c = i_a|i_b;
+            `OP_ALU_XOR:    o_c = (i_a|i_b)&(~(i_a&i_b));
             `OP_ALU_SLT:    ;
             `OP_ALU_SLTU:  begin
                 if($signed(i_a) < $signed(i_b)) begin
