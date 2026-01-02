@@ -1,5 +1,5 @@
 // Remember to invoke simulator from ../RV32-Base, not a lower directory or includes may not work properly
-`include "../tb_sanitation/tb_standard.vh"
+`include "../Tb_Sanitation/tb_standard.vh"
 
 module tb;
 

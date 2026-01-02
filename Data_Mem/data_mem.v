@@ -4,11 +4,11 @@ module data_memory #(
     // MEM_SIZE in Words (1024 * 4)
     parameter MEM_SIZE = 1024
 ) (
-    input wire i_clk,
-    input wire i_we,
-    input wire [`DATA_WIDTH-1:0] i_data,
-    input wire [$clog2(MEM_SIZE)-1:0] i_addr,
-    output wire [`DATA_WIDTH-1:0] o_data
+    input wire clk,
+    input wire we,
+    input wire [31:0] addr,
+    input wire [`DATA_WIDTH-1:0] wdata,
+    output wire [`DATA_WIDTH-1:0] rdata
 );
 
     reg [`DATA_WIDTH-1:0] memory [0:MEM_SIZE-1];
@@ -22,6 +22,11 @@ module data_memory #(
         memory[4] = 32'h00000004;
     end
 
+    // Write iff we && on positive edge of clk
+    always @(posedge clk) begin
+    if (we)
+        memory[addr[31:2]] <= wdata;
+        end
 
 
 endmodule

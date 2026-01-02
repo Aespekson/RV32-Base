@@ -44,8 +44,9 @@ module inst_mem_tb;
     $finish;
   end
 
+endmodule
+/*
   always @* begin
     $display("time %2t, addr = %3h, inst = %8h", $time, addr, inst);
   end
-
-endmodule
+*/

@@ -1,0 +1,42 @@
+$date
+	Fri Jan  2 02:36:23 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module alu_tb $end
+$var wire 32 ! o_c [31:0] $end
+$var reg 1 " clk $end
+$var reg 32 # i_a [31:0] $end
+$var reg 6 $ i_alu_op [5:0] $end
+$var reg 32 % i_b [31:0] $end
+$scope module dut $end
+$var wire 32 & i_a [31:0] $end
+$var wire 6 ' i_alu_op [5:0] $end
+$var wire 32 ( i_b [31:0] $end
+$var reg 32 ) o_c [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b11111111111111111111111111111110 )
+b1 (
+b0 '
+b1 &
+b1 %
+b0 $
+b1 #
+0"
+b11111111111111111111111111111110 !
+$end
+#5
+1"
+#10
+0"
