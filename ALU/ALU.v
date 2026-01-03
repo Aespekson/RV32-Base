@@ -1,25 +1,26 @@
 // Note on operation codes (numbers right of definition)
-// First three bits define class (arithmetic, logic, and, for lack of better terminology, setting operations (abs, SLT, SLL, etc))
-// Latter three bits specify sub operation within each class (add, sub, and, etc)
+// First four bits define class (arithmetic, logic, and, for lack of better terminology, setting operations (abs, SLT, SLL, etc))
+// Latter four bits specify sub operation within each class (add, sub, and, etc)
 
 // RISC-V ALU Operations
-`define OP_ALU_NOP    6'b000000 // Zero/"Universal Identity" operation
-`define OP_ALU_ADD    6'b001001 // Add
-`define OP_ALU_SUB    6'b001010 // Subtract
-`define OP_ALU_AND    6'b010001 // Bitwise AND
-`define OP_ALU_OR     6'b010011 // Bitwise OR
-`define OP_ALU_XOR    6'b010100 // Bitwise XOR
-`define OP_ALU_SLT    6'b011001 // Set Less Than (signed)
-//`define OP_ALU_SLTU   6'b011010 // Set Less Than (unsigned)  //Currently disabled. Sticking with just SLT for now
-`define OP_ALU_SLL    6'b011011 // Shift Left Logical
-`define OP_ALU_SRL    6'b011100 // Shift Right Logical
-`define OP_ALU_SRA    6'b011101 // Shift Right Arithmetic
+`define OP_ALU_NOP    8'b00000000 // Zero/"Universal Identity" operation
+`define OP_ALU_ADD    8'b00010001 // Add
+`define OP_ALU_SUB    8'b00010010 // Subtract
+`define OP_ALU_AND    8'b00100001 // Bitwise AND
+`define OP_ALU_OR     8'b00100010 // Bitwise OR
+`define OP_ALU_XOR    8'b00100011 // Bitwise XOR
+`define OP_ALU_SLT    8'b00110101 // Set Less Than (signed)
+//`define OP_ALU_SLTU   8'b00110010 // Set Less Than (unsigned)  //Currently disabled. Sticking with just SLT for now
+`define OP_ALU_SLL    8'b00110011 // Shift Left Logical
+`define OP_ALU_SRL    8'b00110100 // Shift Right Logical
+`define OP_ALU_SRA    8'b00110101 // Shift Right Arithmetic
 
 // Additional operations outside basics (though still pretty basic). Includes RV32M operations (MUL,DIV)
 // Will likely be expanded later
-`define OP_ALU_INV    6'b001110 // Bitwise Inversion (NOT operation)
-`define OP_ALU_MUL    6'b001011 // Multiplication
-`define OP_ALU_DIV   6'b001100 // Division
+`define OP_ALU_INV    8'b00100100 // Bitwise Inversion (NOT operation)
+`define OP_ALU_MUL    8'b00010011 // Multiplication
+`define OP_ALU_DIV    8'b00010100 // Division
+`define OP_ALU_MOD    8'b00010101 // Modulus
 
 `define DATA_WIDTH 32
 
@@ -53,6 +54,7 @@ module alu (
             `OP_ALU_INV:    o_c = ~i_a;
             `OP_ALU_MUL:    ;
             `OP_ALU_DIV:    ;
+            `OP_ALU_MOD:    ;
             default: o_c = 0;
         endcase
     end

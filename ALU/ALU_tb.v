@@ -26,21 +26,16 @@ module  alu_tb;
   initial begin
         i_a = 32'h00000001;
         i_b = 32'h00000001;
-        i_alu_op = `OP_ALU_INV;
-      #5
-        `assert(dut.o_c,32'hfffffffe);
-        i_a = 32'h00000001;
-        i_b = 32'h00000001;
         i_alu_op = `OP_ALU_ADD;
-      #5;
+      #5
         `assert(dut.o_c, 32'h00000002);
         i_a = 32'h00000001;
         i_b = 32'h00000001;
         i_alu_op = `OP_ALU_SUB;
       #5;
         `assert(dut.o_c, 32'h00000000);
-        i_a = 32'h00000101;
-        i_b = 32'h00010001;
+        i_a = 32'h00001001;
+        i_b = 32'h00100001;
         i_alu_op = `OP_ALU_AND;
       #5;
         `assert(dut.o_c, 32'h00000001);
@@ -54,6 +49,11 @@ module  alu_tb;
         i_alu_op = `OP_ALU_XOR;
       #5;
         `assert(dut.o_c, 32'h00010100);
+        i_a = 32'h00000001;
+        i_b = 32'h00000001;
+        i_alu_op = `OP_ALU_INV;
+      #5;
+        `assert(dut.o_c,32'hfffffffe);
         i_a = 32'h00000101;
         i_b = 32'h00010001;
         i_alu_op = `OP_ALU_SLT;
