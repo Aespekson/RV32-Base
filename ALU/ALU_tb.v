@@ -26,7 +26,7 @@ module  alu_tb;
   initial begin
         i_a = 32'h00000001;
         i_b = 32'h00000001;
-        i_alu_op = `OP_ALU_NOP;
+        i_alu_op = `OP_ALU_INV;
       #5
         `assert(dut.o_c,32'hfffffffe);
         i_a = 32'h00000001;
