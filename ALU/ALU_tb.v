@@ -89,7 +89,7 @@ module  alu_tb;
        #5;
         `assert(dut.o_c, 32'h00000001);
         i_a = 32'h00000007;
-        i_a = 32'h00000005;
+        i_b = 32'h00000005;
         i_alu_op = `OP_ALU_MOD;
        #5;
         `assert(dut.o_c, 32'h00000002);

@@ -52,9 +52,33 @@ module alu (
             `OP_ALU_SRL:    o_c = i_a >> i_b[4:0];
             `OP_ALU_SRA:    o_c = $signed(i_a) >>> i_b[4:0];
             `OP_ALU_INV:    o_c = ~i_a;
-            `OP_ALU_MUL:    o_c = i_a*i_b;
-            `OP_ALU_DIV:    o_c = i_a/i_b;
-            `OP_ALU_MOD:    o_c = i_a % i_b;
+            `OP_ALU_MUL:
+            begin
+                logic [63:0] prod;
+                prod = $signed(i_a) * $signed(i_b); // signed×signed for MUL
+                o_c  = prod[31:0];
+            end
+            `OP_ALU_DIV:
+            begin
+                if (i_b == 32'd0) begin
+                    o_c = 32'hffffffff;
+                end else if (i_a == 32'h80000000 && i_b == 32'hffffffff) begin
+                    o_c = 32'h80000000;
+                end else begin
+                    o_c = $signed(i_a) / $signed(i_b);
+                end
+            end
+            `OP_ALU_MOD:
+            begin
+                if (i_b == 32'd0) begin
+                    o_c = i_a;
+                end else if (i_a == 32'h8000_0000 && i_b == 32'hffff_ffff) begin
+                    o_c = 32'd0;
+                end else begin
+                    o_c = $signed(i_a) % $signed(i_b);
+                end
+            end
+
             default: o_c = 0;
         endcase
     end
