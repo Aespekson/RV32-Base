@@ -9,13 +9,13 @@
 `define OP_ALU_AND    8'b00100001 // Bitwise AND
 `define OP_ALU_OR     8'b00100010 // Bitwise OR
 `define OP_ALU_XOR    8'b00100011 // Bitwise XOR
-`define OP_ALU_SLT    8'b00110101 // Set Less Than (signed)
+`define OP_ALU_SLT    8'b00110001 // Set Less Than (signed)
 //`define OP_ALU_SLTU   8'b00110010 // Set Less Than (unsigned)  //Currently disabled. Sticking with just SLT for now
 `define OP_ALU_SLL    8'b00110011 // Shift Left Logical
 `define OP_ALU_SRL    8'b00110100 // Shift Right Logical
 `define OP_ALU_SRA    8'b00110101 // Shift Right Arithmetic
 
-// Additional operations outside basics (though still pretty basic). Includes RV32M operations (MUL,DIV)
+// Additional operations outside basics (though still pretty basic). Includes RV32M operations (MUL,DIV) and custom operations
 // Will likely be expanded later
 `define OP_ALU_INV    8'b00100100 // Bitwise Inversion (NOT operation)
 `define OP_ALU_MUL    8'b00010011 // Multiplication
@@ -25,7 +25,7 @@
 `define DATA_WIDTH 32
 
 module alu (
-    input wire [5:0] i_alu_op,
+    input wire [7:0] i_alu_op,
     input wire [31:0] i_a,
     input wire [31:0] i_b,
     output reg [31:0] o_c
@@ -52,9 +52,9 @@ module alu (
             `OP_ALU_SRL:    o_c = i_a >> i_b[4:0];
             `OP_ALU_SRA:    o_c = $signed(i_a) >>> i_b[4:0];
             `OP_ALU_INV:    o_c = ~i_a;
-            `OP_ALU_MUL:    ;
-            `OP_ALU_DIV:    ;
-            `OP_ALU_MOD:    ;
+            `OP_ALU_MUL:    o_c = i_a*i_b;
+            `OP_ALU_DIV:    o_c = i_a/i_b;
+            `OP_ALU_MOD:    o_c = i_a % i_b;
             default: o_c = 0;
         endcase
     end

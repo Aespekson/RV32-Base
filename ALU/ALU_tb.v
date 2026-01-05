@@ -4,7 +4,7 @@
 module  alu_tb;
 
   reg clk;
-  reg [5:0] i_alu_op = 5'b00000;
+  reg [7:0] i_alu_op = 8'b00000000;
   reg [`DATA_WIDTH-1:0] i_a = 32'h00000000;
   reg [`DATA_WIDTH-1:0] i_b = 32'h00000000;
 
@@ -50,7 +50,6 @@ module  alu_tb;
       #5;
         `assert(dut.o_c, 32'h00010100);
         i_a = 32'h00000001;
-        i_b = 32'h00000001;
         i_alu_op = `OP_ALU_INV;
       #5;
         `assert(dut.o_c,32'hfffffffe);
@@ -79,6 +78,22 @@ module  alu_tb;
          i_alu_op = `OP_ALU_SRA;
        #5;
         `assert(dut.o_c, 32'hffffffff);
+        i_a = 32'h00000002;
+        i_b = 32'h00000002;
+        i_alu_op = `OP_ALU_MUL;
+       #5;
+        `assert(dut.o_c, 32'h00000004);
+        i_a = 32'h00000005;
+        i_b = 32'h00000005;
+        i_alu_op = `OP_ALU_DIV;
+       #5;
+        `assert(dut.o_c, 32'h00000001);
+        i_a = 32'h00000007;
+        i_a = 32'h00000005;
+        i_alu_op = `OP_ALU_MOD;
+       #5;
+        `assert(dut.o_c, 32'h00000002);
+
 
     $finish;
 
