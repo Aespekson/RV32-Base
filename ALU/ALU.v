@@ -55,28 +55,20 @@ module alu (
             `OP_ALU_MUL:
             begin
                 logic [63:0] prod;
-                prod = $signed(i_a) * $signed(i_b); // signed×signed for MUL
+                prod = $signed(i_a) * $signed(i_b);
                 o_c  = prod[31:0];
             end
             `OP_ALU_DIV:
             begin
-                if (i_b == 32'd0) begin
-                    o_c = 32'hffffffff;
-                end else if (i_a == 32'h80000000 && i_b == 32'hffffffff) begin
-                    o_c = 32'h80000000;
-                end else begin
-                    o_c = $signed(i_a) / $signed(i_b);
-                end
+                if (i_b == 32'h0) o_c = 32'hffffffff;
+                else if (i_a == 32'h80000000 && i_b == 32'hffffffff) o_c = 32'h80000000;
+                else o_c = $signed(i_a) / $signed(i_b);
             end
             `OP_ALU_MOD:
             begin
-                if (i_b == 32'd0) begin
-                    o_c = i_a;
-                end else if (i_a == 32'h8000_0000 && i_b == 32'hffff_ffff) begin
-                    o_c = 32'd0;
-                end else begin
-                    o_c = $signed(i_a) % $signed(i_b);
-                end
+                if (i_b == 32'h0) o_c = i_a;
+                else if (i_a == 32'h8000_0000 && i_b == 32'hffff_ffff) o_c = 32'h0;
+                else o_c = $signed(i_a) % $signed(i_b);
             end
 
             default: o_c = 0;
