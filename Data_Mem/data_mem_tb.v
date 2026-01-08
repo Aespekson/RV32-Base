@@ -7,15 +7,16 @@ module  dat_memory_tb;
 
   reg clk;
   reg we;
-  reg [31:0] rdata;
-  reg [31:0] addr = 32'h00000000;
-
   reg [31:0] wdata = 32'h00000000;
+  reg [31:0] rdata;
+  reg [31:0] waddr = 32'h00000000;
+  reg [31:0] raddr = 32'h00000000;
 
   data_memory dut (
     .clk(clk),
     .we(we),
-    .addr(addr),
+    .raddr(raddr),
+    .waddr(waddr),
     .wdata(wdata),
     .rdata(rdata)
   );
@@ -28,19 +29,19 @@ module  dat_memory_tb;
 
   initial begin
         we = 1'b0;
-    #10;
-        addr = 32'h00000004;
+    #15;
+        raddr = 32'h00000004;
         `assert(dut.rdata, 32'h00000000);
-    #10;
-        addr = 32'h00000008;
+    #15;
+        raddr = 32'h00000008;
         `assert(dut.rdata, 32'h00000001);
-    #10;
+    #15;
         //Write Data
         we = 1'b1;
-        addr = 32'h00000000;
+        waddr = 32'h00000000;
         wdata = 32'h00000001;
         `assert(dut.rdata, 32'h00000002);
-    #10;
+    #15;
         `assert(dut.rdata, 32'h00000001);
     $finish;
 

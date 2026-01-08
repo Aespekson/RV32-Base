@@ -6,7 +6,8 @@ module data_memory #(
 ) (
     input wire clk,
     input wire we,
-    input wire [31:0] addr,
+    input wire [31:0] waddr,
+    input wire [31:0] raddr,
     input wire [31:0] wdata,
     output wire [31:0] rdata
 );
@@ -17,15 +18,14 @@ module data_memory #(
     initial begin
         memory[0] = 32'h00000000;
         memory[1] = 32'h00000001;
-        memory[2] = 32'h00000002;
-        memory[3] = 32'h00000003;
-        memory[4] = 32'h00000004;
+        memory[2] = 32'h00000010;
+        memory[3] = 32'h00000100;
+        memory[4] = 32'h00001000;
     end
 
     // Write iff we && on positive edge of clk
     always @(posedge clk) begin
-    if (we)
-        memory[addr[31:2]] <= wdata;
+    if (we) memory[waddr[31:2]] <= wdata;
     end
 
 endmodule
