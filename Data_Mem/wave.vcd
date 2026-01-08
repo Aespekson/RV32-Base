@@ -1,5 +1,5 @@
 $date
-	Tue Dec 23 18:08:26 2025
+	Thu Jan  8 06:33:34 2026
 $end
 $version
 	Icarus Verilog
@@ -8,11 +8,11 @@ $timescale
 	1s
 $end
 $scope module dat_memory_tb $end
-$var wire 1 ! rdata $end
+$var wire 32 ! rdata [31:0] $end
 $var parameter 32 " MEM_SIZE $end
 $var reg 32 # addr [31:0] $end
 $var reg 1 $ clk $end
-$var reg 32 % i_data [31:0] $end
+$var reg 32 % wdata [31:0] $end
 $var reg 1 & we $end
 $scope module dut $end
 $var wire 32 ' addr [31:0] $end
@@ -31,54 +31,18 @@ b10000000000 "
 $end
 #0
 $dumpvars
-b0z )
+b0 )
 bz (
 b0 '
 0&
 b0 %
 0$
 b0 #
-z!
+bz !
 $end
 #5
 1$
 #10
-0$
-#15
-1$
-#20
-0$
-#25
-1$
-#30
-0$
-#35
-1$
-#40
-0$
-#45
-1$
-#50
-0$
-#55
-1$
-#60
-0$
-#65
-1$
-#70
-0$
-#75
-1$
-#80
-0$
-#85
-1$
-#90
-0$
-#95
-1$
-#100
 0$
 b100 #
 b100 '

@@ -7,11 +7,11 @@ module data_memory #(
     input wire clk,
     input wire we,
     input wire [31:0] addr,
-    input wire [`DATA_WIDTH-1:0] wdata,
-    output wire [`DATA_WIDTH-1:0] rdata
+    input wire [31:0] wdata,
+    output wire [31:0] rdata
 );
 
-    reg [`DATA_WIDTH-1:0] memory [0:MEM_SIZE-1];
+    reg [31:0] memory [0:MEM_SIZE-1];
     integer i;
 
     initial begin
@@ -26,7 +26,6 @@ module data_memory #(
     always @(posedge clk) begin
     if (we)
         memory[addr[31:2]] <= wdata;
-        end
-
+    end
 
 endmodule

@@ -7,10 +7,10 @@ module  dat_memory_tb;
 
   reg clk;
   reg we;
-  reg [31:0] i_data = 32'h00000000;
+  reg [31:0] rdata;
   reg [31:0] addr = 32'h00000000;
 
-  wire [31:0] o_data;
+  reg [31:0] wdata = 32'h00000000;
 
   data_memory dut (
     .clk(clk),
@@ -28,7 +28,7 @@ module  dat_memory_tb;
 
   initial begin
         we = 1'b0;
-    #100;
+    #10;
         addr = 32'h00000004;
         `assert(dut.rdata, 32'h00000000);
     #10;
@@ -38,7 +38,7 @@ module  dat_memory_tb;
         //Write Data
         we = 1'b1;
         addr = 32'h00000000;
-        i_data = 32'h00000001;
+        wdata = 32'h00000001;
         `assert(dut.rdata, 32'h00000002);
     #10;
         `assert(dut.rdata, 32'h00000001);
@@ -51,11 +51,4 @@ module  dat_memory_tb;
     $dumpvars;
   end
 
-
-
 endmodule
-/*
-  always @(posedge clk) begin
-    $display("time %2t, clk = %b, we = %b, addr = %3h, i_data = %8h, o_data = %8h", $time, clk, we, addr, i_data, o_data);
-  end
-*/
