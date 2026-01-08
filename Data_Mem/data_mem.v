@@ -32,7 +32,10 @@ module data_memory #(
     //Read implemented and fixed.
     always @(posedge clk) begin
         if (we) memory[widx] <= wdata;
-        rdata <= memory[ridx];
+
+        // Write first if raddr = waddr on the same cycle
+        if (we && (widx == ridx)) rdata <= wdata;
+        else rdata <= memory[ridx];
     end
 
 endmodule
