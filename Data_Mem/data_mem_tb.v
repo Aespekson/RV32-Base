@@ -8,7 +8,7 @@ module  dat_memory_tb;
   reg clk;
   reg we;
   reg [31:0] wdata = 32'h00000000;
-  reg [31:0] rdata;
+  wire [31:0] rdata;
   reg [31:0] waddr = 32'h00000000;
   reg [31:0] raddr = 32'h00000000;
 
@@ -21,30 +21,32 @@ module  dat_memory_tb;
     .rdata(rdata)
   );
 
-  initial begin
-    clk = 1'b0;
-  end
-
+  initial clk = 0;
   always #5 clk = ~clk;
 
   initial begin
-        we = 1'b0;
-    #15;
+        we = 0;
+        waddr = 0;
+        raddr = 0;
+        wdata = 0;
+    // Logic and check timing fixed to be less arbitrary
+    // Also to provide time for logic to be visible before checking results.
+    @(posedge clk);
         raddr = 32'h00000004;
-        `assert(dut.rdata, 32'h00000000);
-    #15;
+    @(negedge clk);
+        `assert(rdata, 32'h00000001);
+    @(posedge clk);
         raddr = 32'h00000008;
-        `assert(dut.rdata, 32'h00000001);
-    #15;
+    @(negedge clk);
+        `assert(dut.rdata, 32'h00000010);
+    @(posedge clk);
         //Write Data
         we = 1'b1;
         waddr = 32'h00000000;
         wdata = 32'h00000001;
-        `assert(dut.rdata, 32'h00000002);
-    #15;
+    @(negedge clk);
         `assert(dut.rdata, 32'h00000001);
     $finish;
-
   end
 
   initial begin

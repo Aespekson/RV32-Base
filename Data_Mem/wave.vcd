@@ -1,5 +1,5 @@
 $date
-	Thu Jan  8 06:33:34 2026
+	Thu Jan  8 10:03:55 2026
 $end
 $version
 	Icarus Verilog
@@ -10,39 +10,52 @@ $end
 $scope module dat_memory_tb $end
 $var wire 32 ! rdata [31:0] $end
 $var parameter 32 " MEM_SIZE $end
-$var reg 32 # addr [31:0] $end
-$var reg 1 $ clk $end
-$var reg 32 % wdata [31:0] $end
-$var reg 1 & we $end
+$var reg 1 # clk $end
+$var reg 32 $ raddr [31:0] $end
+$var reg 32 % waddr [31:0] $end
+$var reg 32 & wdata [31:0] $end
+$var reg 1 ' we $end
 $scope module dut $end
-$var wire 32 ' addr [31:0] $end
-$var wire 1 $ clk $end
-$var wire 32 ( rdata [31:0] $end
-$var wire 32 ) wdata [31:0] $end
-$var wire 1 & we $end
-$var parameter 32 * MEM_SIZE $end
+$var wire 1 # clk $end
+$var wire 32 ( raddr [31:0] $end
+$var wire 32 ) waddr [31:0] $end
+$var wire 32 * wdata [31:0] $end
+$var wire 1 ' we $end
+$var wire 10 + widx [9:0] $end
+$var wire 10 , ridx [9:0] $end
+$var parameter 32 - MEM_SIZE $end
+$var reg 32 . rdata [31:0] $end
+$var integer 32 / i [31:0] $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
-b10000000000 *
+b10000000000 -
 b10000000000 "
 $end
 #0
 $dumpvars
+b10000000000 /
+bx .
+b0 ,
+b0 +
+b0 *
 b0 )
-bz (
-b0 '
-0&
+b0 (
+0'
+b0 &
 b0 %
-0$
-b0 #
-bz !
+b0 $
+0#
+bx !
 $end
 #5
-1$
+b0 !
+b0 .
+b1 ,
+b100 $
+b100 (
+1#
 #10
-0$
-b100 #
-b100 '
+0#
