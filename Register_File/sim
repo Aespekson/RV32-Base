@@ -1,0 +1,148 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib64/ivl/system.vpi";
+:vpi_module "/usr/lib64/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib64/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib64/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib64/ivl/va_math.vpi";
+:vpi_module "/usr/lib64/ivl/v2009.vpi";
+S_0x5606bc942b00 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_0x5606bc942c90 .scope module, "register_file_tb" "register_file_tb" 3 7;
+ .timescale 0 0;
+v0x5606bc95c160_0 .var "clk", 0 0;
+v0x5606bc95c220_0 .var "rd", 31 0;
+v0x5606bc95c2c0_0 .var "rd_addr", 4 0;
+o0x7f510f3dc0d8 .functor BUFZ 32, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; HiZ drive
+v0x5606bc95c3c0_0 .net "rs1", 31 0, o0x7f510f3dc0d8;  0 drivers
+v0x5606bc95c490_0 .var "rs1_addr", 4 0;
+o0x7f510f3dc138 .functor BUFZ 32, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; HiZ drive
+v0x5606bc95c530_0 .net "rs2", 31 0, o0x7f510f3dc138;  0 drivers
+v0x5606bc95c600_0 .var "rs2_addr", 4 0;
+v0x5606bc95c6d0_0 .var "rst", 0 0;
+v0x5606bc95c7a0_0 .var "we", 0 0;
+S_0x5606bc905500 .scope module, "dut" "register_file" 3 19, 4 4 0, S_0x5606bc942c90;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "we";
+    .port_info 2 /INPUT 1 "rst";
+    .port_info 3 /INPUT 5 "rd_addr";
+    .port_info 4 /INPUT 32 "rd";
+    .port_info 5 /INPUT 5 "rs1_addr";
+    .port_info 6 /INPUT 5 "rs2_addr";
+    .port_info 7 /OUTPUT 32 "rs1";
+    .port_info 8 /OUTPUT 32 "rs2";
+v0x5606bc905770_0 .net "clk", 0 0, v0x5606bc95c160_0;  1 drivers
+v0x5606bc95b7b0_0 .var/i "i", 31 0;
+v0x5606bc95b890_0 .net "rd", 31 0, v0x5606bc95c220_0;  1 drivers
+v0x5606bc95b950_0 .net "rd_addr", 4 0, v0x5606bc95c2c0_0;  1 drivers
+v0x5606bc95ba30 .array "registers", 0 31, 31 0;
+v0x5606bc95bb40_0 .net "rs1", 31 0, o0x7f510f3dc0d8;  alias, 0 drivers
+v0x5606bc95bc20_0 .net "rs1_addr", 4 0, v0x5606bc95c490_0;  1 drivers
+v0x5606bc95bd00_0 .net "rs2", 31 0, o0x7f510f3dc138;  alias, 0 drivers
+v0x5606bc95bde0_0 .net "rs2_addr", 4 0, v0x5606bc95c600_0;  1 drivers
+v0x5606bc95bec0_0 .net "rst", 0 0, v0x5606bc95c6d0_0;  1 drivers
+v0x5606bc95bf80_0 .net "we", 0 0, v0x5606bc95c7a0_0;  1 drivers
+    .scope S_0x5606bc905500;
+T_0 ;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0x5606bc95b7b0_0, 0, 32;
+T_0.0 ;
+    %load/vec4 v0x5606bc95b7b0_0;
+    %cmpi/s 32, 0, 32;
+    %jmp/0xz T_0.1, 5;
+    %pushi/vec4 0, 0, 32;
+    %ix/getv/s 4, v0x5606bc95b7b0_0;
+    %store/vec4a v0x5606bc95ba30, 4, 0;
+    %load/vec4 v0x5606bc95b7b0_0;
+    %addi 1, 0, 32;
+    %store/vec4 v0x5606bc95b7b0_0, 0, 32;
+    %jmp T_0.0;
+T_0.1 ;
+    %pushi/vec4 1, 0, 32;
+    %ix/load 4, 0, 0;
+    %flag_set/imm 4, 0;
+    %store/vec4a v0x5606bc95ba30, 4, 0;
+    %pushi/vec4 2, 0, 32;
+    %ix/load 4, 1, 0;
+    %flag_set/imm 4, 0;
+    %store/vec4a v0x5606bc95ba30, 4, 0;
+    %pushi/vec4 3, 0, 32;
+    %ix/load 4, 2, 0;
+    %flag_set/imm 4, 0;
+    %store/vec4a v0x5606bc95ba30, 4, 0;
+    %pushi/vec4 3, 0, 32;
+    %ix/load 4, 29, 0;
+    %flag_set/imm 4, 0;
+    %store/vec4a v0x5606bc95ba30, 4, 0;
+    %pushi/vec4 2, 0, 32;
+    %ix/load 4, 30, 0;
+    %flag_set/imm 4, 0;
+    %store/vec4a v0x5606bc95ba30, 4, 0;
+    %pushi/vec4 1, 0, 32;
+    %ix/load 4, 31, 0;
+    %flag_set/imm 4, 0;
+    %store/vec4a v0x5606bc95ba30, 4, 0;
+    %end;
+    .thread T_0;
+    .scope S_0x5606bc942c90;
+T_1 ;
+    %pushi/vec4 0, 0, 5;
+    %store/vec4 v0x5606bc95c2c0_0, 0, 5;
+    %pushi/vec4 0, 0, 5;
+    %store/vec4 v0x5606bc95c490_0, 0, 5;
+    %pushi/vec4 0, 0, 5;
+    %store/vec4 v0x5606bc95c600_0, 0, 5;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0x5606bc95c220_0, 0, 32;
+    %end;
+    .thread T_1, $init;
+    .scope S_0x5606bc942c90;
+T_2 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5606bc95c160_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5606bc95c7a0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5606bc95c6d0_0, 0, 1;
+    %pushi/vec4 0, 0, 5;
+    %store/vec4 v0x5606bc95c490_0, 0, 5;
+    %pushi/vec4 0, 0, 5;
+    %store/vec4 v0x5606bc95c600_0, 0, 5;
+    %delay 10, 0;
+    %load/vec4 v0x5606bc95bb40_0;
+    %cmpi/ne 0, 0, 32;
+    %jmp/0xz  T_2.0, 6;
+    %vpi_call/w 3 39 "$finish" {0 0 0};
+T_2.0 ;
+    %load/vec4 v0x5606bc95bb40_0;
+    %cmpi/ne 0, 0, 32;
+    %jmp/0xz  T_2.2, 6;
+    %vpi_call/w 3 40 "$finish" {0 0 0};
+T_2.2 ;
+    %vpi_call/w 3 41 "$finish" {0 0 0};
+    %end;
+    .thread T_2;
+    .scope S_0x5606bc942c90;
+T_3 ;
+    %delay 5, 0;
+    %load/vec4 v0x5606bc95c160_0;
+    %inv;
+    %store/vec4 v0x5606bc95c160_0, 0, 1;
+    %jmp T_3;
+    .thread T_3;
+    .scope S_0x5606bc942c90;
+T_4 ;
+    %vpi_call/w 3 47 "$dumpfile", "Register_File/wave.vcd" {0 0 0};
+    %vpi_call/w 3 48 "$dumpvars" {0 0 0};
+    %end;
+    .thread T_4;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "-";
+    "Register_File/register_file_tb.v";
+    "Register_File/register_file.v";
