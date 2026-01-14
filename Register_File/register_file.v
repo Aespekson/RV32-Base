@@ -33,5 +33,9 @@ module register_file(
     if (rs2_addr == 0) rs2 = 0; // x0 hardwired to 0
     else rs2 = registers[rs2_addr];
   end
+  // Note: Same-cycle read-write behavior is not defined here. This will likely be addressed later via forwarding in the decoder module.
+  always_ff @(posedge clk) begin
+    if (we && rd_addr!=0) registers[rd_addr] = rd;
+  end
 
 endmodule

@@ -46,6 +46,14 @@ register_file dut (
   @(negedge clk);
     `assert(dut.rs1,2)
     `assert(dut.rs2,3)
+    rs1_addr = 5'b11111;
+    rs2_addr = 5'b00000;
+    we = 1'b1;
+    rd_addr = 5'b11111;
+    rd = 32'h00000010;
+  @(negedge clk);
+    `assert(dut.rs1,32'h00000010);
+    `assert(dut.rs2,32'h00000000);
     success = 1'b1;
   #5;
   $finish;
