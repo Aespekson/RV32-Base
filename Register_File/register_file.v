@@ -9,8 +9,8 @@ module register_file(
   input wire [`DATA_WIDTH-1:0] rd,
   input wire [$clog2(`NUM_REGISTER)-1:0] rs1_addr,
   input wire [$clog2(`NUM_REGISTER)-1:0] rs2_addr,
-  output reg [`DATA_WIDTH-1:0] rs1,
-  output reg [`DATA_WIDTH-1:0] rs2);
+  output logic [`DATA_WIDTH-1:0] rs1,
+  output logic [`DATA_WIDTH-1:0] rs2);
 
 
   reg [31:0] registers [31:0]; //Registers declared as nested (2-dim) array. Do not be mistaken; the former 31 comes from the number of registers (32) while the latter comes from the data width of 32.
@@ -20,7 +20,6 @@ module register_file(
       for (i = 0; i < `NUM_REGISTER; i = i + 1) begin //Not really necessary but avoids leaving things undefined.
           registers[i] = 32'h00000000;
       end
-      registers[0] = 1;
       registers[1] = 2;
       registers[2] = 3;
       registers[29] = 3;
@@ -28,11 +27,11 @@ module register_file(
       registers[31] = 1;
   end
 
-  always @(posedge clk) begin
-    if (rst) begin
-      rs1 = 32'h00000000;
-      rs2 = 32'h00000000;
-    end
+  always_comb begin
+    if (rs1_addr == 0) rs1 = 0;
+    else rs1 = registers[rs1_addr];
+    if (rs2_addr == 0) rs2 = 0; // x0 hardwired to 0
+    else rs2 = registers[rs2_addr];
   end
 
 endmodule
