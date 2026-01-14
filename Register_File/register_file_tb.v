@@ -31,10 +31,10 @@ register_file dut (
   initial begin
     clk = 0;
     we = 0;
-    rst = 0;
+    rst = 1;
     rs1_addr = 5'b00000;
     rs2_addr = 5'b00000;
-  (@negedge clk);
+  @(negedge clk);
     `assert(dut.rs1,32'h00000000)
     `assert(dut.rs1,32'h00000000)
   #5;
