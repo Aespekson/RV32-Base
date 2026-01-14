@@ -13,19 +13,8 @@ module register_file(
   output logic [`DATA_WIDTH-1:0] rs2);
 
 
-  reg [31:0] registers [31:0]; //Registers declared as nested (2-dim) array. Do not be mistaken; the former 31 comes from the number of registers (32) while the latter comes from the data width of 32.
+  logic [`DATA_WIDTH-1:0] registers [`NUM_REGISTER-1:0];
   integer i;
-
-  initial begin //Important that this only valid in simulation for testing
-      for (i = 0; i < `NUM_REGISTER; i = i + 1) begin //Not really necessary but avoids leaving things undefined.
-          registers[i] = 32'h00000000;
-      end
-      registers[1] = 2;
-      registers[2] = 3;
-      registers[29] = 3;
-      registers[30] = 2;
-      registers[31] = 1;
-  end
 
   always_comb begin
     if (rs1_addr == 0) rs1 = 0;
@@ -35,7 +24,10 @@ module register_file(
   end
   // Note: Same-cycle read-write behavior is not defined here. This will likely be addressed later via forwarding in the decoder module.
   always_ff @(posedge clk) begin
-    if (we && rd_addr!=0) registers[rd_addr] = rd;
+    if (rst) begin
+      for (int i = 0; i < `NUM_REGISTER; i++) registers[i]<= 32'h00000000;
+    end
+    if (we && rd_addr!=0) registers[rd_addr] <= rd;
   end
 
 endmodule
