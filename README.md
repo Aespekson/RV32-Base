@@ -35,3 +35,10 @@ Folders are capitalized and multiple words are adjoined by "_", as in "Instruct_
 Source code files are not capitalized and multiple words are adjoined by "_", as in "instruct_mem.v"
 
 Scripts are capitalized and multiple words are adjoined by " ", as in "Run Counter.sh"
+
+### Running/Testing Commits
+RV32-Base is currently being developed and tested using the Fedora operating system but should work just fine on any other distro. Nothing has been tested on Windows.
+
+GTKWave and icarus verilog must be installed. It is recommended to either run the .sh scripts located in "../RV32-Base/Run_Scripting/" or to copy+paste the commands located in them (after the cd .. command) into a terminal whose working directory is ../RV32-Base/. 
+
+The dump file is specified in each test bench assuming that the commands are executed from ../RV32-Base/ and will therefore not work if one tries to execute them from somewhere else.
