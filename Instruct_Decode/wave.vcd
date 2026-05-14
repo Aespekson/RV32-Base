@@ -1,0 +1,59 @@
+$date
+	Thu May 14 15:00:24 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ns
+$end
+$scope module decode_tb $end
+$var wire 1 ! o_mem_write $end
+$var wire 8 " o_alu_op [7:0] $end
+$var wire 32 # o_alu_b [31:0] $end
+$var wire 32 $ o_alu_a [31:0] $end
+$var reg 1 % clk $end
+$var reg 32 & inst [31:0] $end
+$scope module dut $end
+$var wire 32 ' inst [31:0] $end
+$var reg 32 ( o_alu_a [31:0] $end
+$var reg 32 ) o_alu_b [31:0] $end
+$var reg 8 * o_alu_op [7:0] $end
+$var reg 1 ! o_mem_write $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+bx *
+bx )
+bx (
+b0 '
+b0 &
+0%
+bx $
+bx #
+bx "
+x!
+$end
+#5
+1%
+#10
+0!
+b10101010101010101010101010101010 #
+b10101010101010101010101010101010 )
+b10101010101010101010101010101010 $
+b10101010101010101010101010101010 (
+b0 "
+b0 *
+0%
+b10101010101010101010101010101010 &
+b10101010101010101010101010101010 '
+#15
+1%
+#20
+0%
+#21
