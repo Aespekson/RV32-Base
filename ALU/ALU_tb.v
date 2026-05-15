@@ -93,8 +93,6 @@ module  alu_tb;
         i_alu_op = `OP_ALU_MOD;
        #5;
         `assert(dut.o_c, 32'h00000002);
-
-
     $finish;
 
   end
