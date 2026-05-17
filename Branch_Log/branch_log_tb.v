@@ -13,7 +13,7 @@ module  branch_unit_tb;
 
   wire o_take;
 
-  branch_unit dut (
+  branch_log dut (
     .i_branch(i_branch),
     .i_branch_op(i_branch_op),
     .i_a(i_a),
@@ -36,7 +36,7 @@ module  branch_unit_tb;
   end
 
   initial begin
-    $dumpfile("Branch_Unit/wave.vcd");
+    $dumpfile("Branch_Log/wave.vcd");
     $dumpvars;
   end
 
