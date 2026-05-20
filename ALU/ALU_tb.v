@@ -1,6 +1,3 @@
-`define assert(signal, value) \
-        if (signal !== value) $finish;
-
 module  alu_tb;
 
   reg clk;

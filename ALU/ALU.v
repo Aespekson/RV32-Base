@@ -1,28 +1,4 @@
-// Note on operation codes (numbers right of definition)
-// First four bits define class (arithmetic, logic, and, for lack of better terminology, setting operations (abs, SLT, SLL, etc))
-// Latter four bits specify sub operation within each class (add, sub, and, etc)
-
-// RISC-V ALU Operations
-`define OP_ALU_NOP    7'b00000000 // Zero/"Universal Identity" operation
-`define OP_ALU_ADD    7'b0010001 // Add
-`define OP_ALU_SUB    7'b0010010 // Subtract
-`define OP_ALU_AND    7'b0100001 // Bitwise AND
-`define OP_ALU_OR     7'b0100010 // Bitwise OR
-`define OP_ALU_XOR    7'b0100011 // Bitwise XOR
-`define OP_ALU_SLT    7'b0110001 // Set Less Than (signed)
-//`define OP_ALU_SLTU   8'b00110010 // Set Less Than (unsigned)  //Currently disabled. Sticking with just SLT for now
-`define OP_ALU_SLL    7'b0110011 // Shift Left Logical
-`define OP_ALU_SRL    7'b0110100 // Shift Right Logical
-`define OP_ALU_SRA    7'b0110101 // Shift Right Arithmetic
-
-// Additional operations outside basics (though still pretty basic). Includes RV32M operations (MUL,DIV) and custom operations
-// Will likely be expanded later
-`define OP_ALU_INV    7'b0100100 // Bitwise Inversion (NOT operation)
-`define OP_ALU_MUL    7'b0010011 // Multiplication
-`define OP_ALU_DIV    7'b0010100 // Division
-`define OP_ALU_MOD    7'b0010101 // Modulus
-
-`define DATA_WIDTH 32
+`include "definitions.vh"
 
 module alu (
     input wire [7:0] i_alu_op,
