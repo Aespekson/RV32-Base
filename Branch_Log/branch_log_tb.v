@@ -1,5 +1,3 @@
-`include "definitions.vh"
-
 // Unique to this tb rn. Will not move to definitions for now.
 `define incrementpass \
         passed++;
