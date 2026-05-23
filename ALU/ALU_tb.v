@@ -56,6 +56,11 @@ module  alu_tb;
       #5;
         `assert(dut.o_c, 32'h00000001);
         i_a = 32'h00000001;
+        i_b = 32'hA0A0B0B0;
+        i_alu_op = `OP_ALU_SLTU;
+      #5;
+        `assert(dut.o_c,32'h00000001);
+        i_a = 32'h00000001;
         i_b = 32'h00000010;
         i_alu_op = `OP_ALU_SLL;
       #5;
@@ -90,6 +95,12 @@ module  alu_tb;
         i_alu_op = `OP_ALU_MOD;
        #5;
         `assert(dut.o_c, 32'h00000002);
+        i_a = 32'hAABBAABB;
+        i_b = 32'h99009900;
+        i_alu_op = `OP_ALU_NOP;
+       #5;
+        `assert(dut.o_c,32'h0);
+       #3; //Odd time to make it easier to tell if it finished
     $finish;
 
   end

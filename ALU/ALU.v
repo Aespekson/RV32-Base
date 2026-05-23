@@ -19,11 +19,11 @@ module alu (
                 if(i_a<i_b) o_c = 1;
                 else o_c = 0;
             end
-            /*`OP_ALU_SLTU:
+            `OP_ALU_SLTU:
             begin
-                if($signed(i_a) < $signed(i_b)) o_c = 1;
+                if(i_a < i_b) o_c = 1;
                 else o_c = 0;
-            end*/
+            end
             `OP_ALU_SLL:    o_c = i_a << i_b[4:0];
             `OP_ALU_SRL:    o_c = i_a >> i_b[4:0];
             `OP_ALU_SRA:    o_c = $signed(i_a) >>> i_b[4:0];
@@ -45,6 +45,10 @@ module alu (
                 if (i_b == 32'h0) o_c = i_a;
                 else if (i_a == 32'h8000_0000 && i_b == 32'hffff_ffff) o_c = 32'h0;
                 else o_c = $signed(i_a) % $signed(i_b);
+            end
+            `OP_ALU_NOP:// Explicit case for NOP rather than just relying on default
+            begin
+                o_c = 32'h0;
             end
 
             default: o_c = 0;

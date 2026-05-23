@@ -42,7 +42,7 @@ if (signal !== value) $finish;
 `define OP_ALU_OR     7'b0100010 // Bitwise OR
 `define OP_ALU_XOR    7'b0100011 // Bitwise XOR
 `define OP_ALU_SLT    7'b0110001 // Set Less Than (signed)
-//`define OP_ALU_SLTU   7'b0110010 // Set Less Than (unsigned)  //Currently disabled. Sticking with just SLT for now
+`define OP_ALU_SLTU   7'b0110010 // Set Less Than (unsigned)
 `define OP_ALU_SLL    7'b0110011 // Shift Left Logical
 `define OP_ALU_SRL    7'b0110100 // Shift Right Logical
 `define OP_ALU_SRA    7'b0110101 // Shift Right Arithmetic
