@@ -4,6 +4,20 @@ if (signal !== value) $finish;
 
 `define DATA_WIDTH 32
 `define INST_WIDTH 32
+`define NUM_REGISTER 32
+`define FUNCT7_WIDTH 7
+
+
+// Instruction opcodes (identify type of instruction being fetched)
+//From included image of RV32I base instruction set
+`define Rtype   7'b0110011
+`define Itype_A 7'b0010011 //Arithmetic
+`define Itype_L 7'b0000011 //Load
+`define Stype   7'b0100011
+`define Btype   7'b1100011
+`define Utype   7'b0110111
+`define Jtype   7'b1101111
+
 
 //Branch opcodes
 `define BRANCH_BEQ 3'b000 // Branch Equal
