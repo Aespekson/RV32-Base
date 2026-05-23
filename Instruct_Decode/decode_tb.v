@@ -6,8 +6,8 @@ module  decode_tb;
   reg [`INST_WIDTH-1:0] inst = 32'h00000000;
 
   wire [`FUNCT7_WIDTH-1:0] o_alu_op;
-  wire [31:0] o_alu_a;
-  wire [31:0] o_alu_b;
+  wire [`DATA_WIDTH-1:0] o_alu_a;
+  wire [`DATA_WIDTH-1:0] o_alu_b;
   wire o_branch;
   wire [2:0] o_branch_op;
   wire o_mem_write;

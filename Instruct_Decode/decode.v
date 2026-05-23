@@ -19,15 +19,46 @@ module decode (
     output reg o_mem_write
 );
 
-    reg ran;
+    wire [6:0] i_opcode = inst[6:0]; //Instruction opcode
 
     always @* begin
+        // Default signals
         o_alu_op = 0;
-        o_alu_a = inst;//Temporary, to test that it runs
-        o_alu_b = inst;
         o_mem_write = 0;
-        // Add more default signals later when we actually have the modules we need.
+        o_branch = 0;
+        o_rs1_addr = 0;
+        o_rs2_addr = 0;
+        o_rd_addr = 0;
+        o_result_mux = 0;
+        o_reg_write = 0;
+        case (i_opcode)
+            `Rtype: begin
+                //stuff
+            end
 
+            `Itype_A: begin
+                //stuff
+            end
+
+            `Itype_L: begin
+                //stuff
+            end
+
+            `Stype: begin
+                //
+            end
+
+            `Btype: begin
+                //
+            end
+
+            `Utype: begin
+                //
+            end
+
+            `Jtype: begin
+                //
+            end
     end
 
 endmodule
