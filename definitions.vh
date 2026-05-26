@@ -35,7 +35,7 @@ if (signal !== value) $finish;
 // Latter four bits specify sub operation within each class (add, sub, and, etc)
 
 //ALU ops
-`define OP_ALU_NOP    7'b00000000 // Zero/"Universal Identity" operation
+`define OP_ALU_NOP    7'b0000000 // Zero/"Universal Identity" operation
 `define OP_ALU_ADD    7'b0010001 // Add
 `define OP_ALU_SUB    7'b0010010 // Subtract
 `define OP_ALU_AND    7'b0100001 // Bitwise AND
