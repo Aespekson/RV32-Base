@@ -10,13 +10,19 @@ if (signal !== value) $finish;
 
 // Instruction opcodes (identify type of instruction being fetched)
 //From included image of RV32I base instruction set
-`define Rtype   7'b0110011
-`define Itype_A 7'b0010011 //Arithmetic
-`define Itype_L 7'b0000011 //Load
-`define Stype   7'b0100011
-`define Btype   7'b1100011
-`define Utype   7'b0110111
-`define Jtype   7'b1101111
+`define Rtype       7'b0110011
+`define Itype_A     7'b0010011 //Arithmetic
+`define Itype_L     7'b0000011 //Load
+`define Stype       7'b0100011
+`define Btype       7'b1100011
+`define Utype       7'b0110111
+`define Jtype       7'b1101111
+`define Utype_AUIPC 7'b0010111 // Add upper immediate to PC
+`define Itype_JALR  7'b1100111
+`define Utype_AUIPC 7'b0010111
+`define Itype_JALR  7'b1100111
+`define Itype_SYS   7'b1110011
+//`define Itype_FENCE 7'b0001111 //Not really necessary as of the current implementation
 
 
 //Branch opcodes
