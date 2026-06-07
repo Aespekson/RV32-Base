@@ -11,12 +11,12 @@ module  decode_tb;
   wire o_branch;
   wire [2:0] o_branch_op;
   wire o_mem_write;
-  wire [`FUNCT7_WIDTH-1:0] o_opcode;
+  reg [6:0] o_opcode;
   wire [1:0] o_result_mux;
   wire o_reg_write;
-  wire [$clog2(`NUM_REGISTER)-1:0] o_rs1_addr;
-  wire [$clog2(`NUM_REGISTER)-1:0] o_rs2_addr;
-  wire [$clog2(`NUM_REGISTER)-1:0] o_rd_addr;
+  reg [$clog2(`NUM_REGISTER)-1:0] o_rs1_addr;
+  reg [$clog2(`NUM_REGISTER)-1:0] o_rs2_addr;
+  reg [$clog2(`NUM_REGISTER)-1:0] o_rd_addr;
 
   decode dut (
     .inst(inst),
