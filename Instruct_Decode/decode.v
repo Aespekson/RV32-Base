@@ -33,7 +33,6 @@ module decode (
     wire [31:0] imm_u = {inst[31:12], 12'b0};
     wire [31:0] imm_j = {{11{inst[31]}}, inst[31], inst[19:12], inst[20], inst[30:21], 1'b0};
 
-    assign o_opcode   = inst[6:0];
     assign o_rd_addr  = inst[11:7];
     assign o_rs1_addr = inst[19:15];
     assign o_rs2_addr = inst[24:20];
@@ -47,7 +46,7 @@ module decode (
     o_branch_op  = 3'b000;
     o_imm        = 32'b0;
 
-    case (opcode)
+    case (o_opcode)
         `Rtype: begin
             o_reg_write = 1'b1;
 
