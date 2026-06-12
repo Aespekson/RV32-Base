@@ -5,7 +5,7 @@
 // only to preserve the original port names/shape while the rest of the CPU is
 // still being assembled.
 module decode (
-    input  wire [`INST_WIDTH-1:0] inst,
+    input  wire [`INST_WIDTH-1:0]     inst,
 
     output reg  [`ALU_OP_WIDTH-1:0]   o_alu_op,
     output reg  [`DATA_WIDTH-1:0]     o_alu_a,
@@ -13,7 +13,7 @@ module decode (
 
     output reg                        o_branch,
     output reg  [2:0]                 o_branch_op,
-    output wire [6:0]                 o_opcode, //Don't think we need this, as opcode is a separate internal signal, but it will be kept for now, just in case.
+    output wire [6:0]                 o_opcode, // Going to keep for testing purposes
     output reg  [1:0]                 o_result_mux,
     output reg                        o_reg_write,
     output wire [`REG_ADDR_WIDTH-1:0] o_rs1_addr,
