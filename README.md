@@ -19,7 +19,7 @@ Explicit non-goals include:
 RV32-Base is strictly made to work with the other two projects below, not with existing platforms. This allows for greater co-design opportunities.
 
 ## ISA
-Documentation for the ISA used in this project is found [here] (https://docs.riscv.org/reference/isa/_attachments/riscv-unprivileged.pdf). 
+Documentation for the ISA used in this project is found [here](https://docs.riscv.org/reference/isa/_attachments/riscv-unprivileged.pdf). 
 
 ## Verification
 Initially, RV32-Base is just going to be verified with naive test benches that test certain base cases (and hopefully problematic borders that serve as edge cases). After an end product has been assembled, it will be verified with [riscv formal](https://github.com/YosysHQ/riscv-formal). 
