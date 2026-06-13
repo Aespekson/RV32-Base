@@ -120,6 +120,20 @@ module decode (
                 o_imm        = imm_i;
             end
 
+            `Itype_JALR: begin
+                // JALR: target is rs1 + imm_i; writeback is pc + 4.
+              if (funct3 == 3'b000) begin //JALR requires this condition. Otherwise, it is illegal
+                o_branch     = 1'b1;
+                o_branch_op  = `BRANCH_JAL_JALR;
+                o_reg_write  = 1'b1;
+                o_alu_op     = `OP_ALU_ADD;
+                o_alu_a      = {{(`DATA_WIDTH-2){1'b0}}, `ALU_A_RS1};
+                o_alu_b      = {{(`DATA_WIDTH-2){1'b0}}, `ALU_B_IMM};
+                o_result_mux = `RESULT_PC4;
+                o_imm        = imm_i;
+              end
+            end
+
             `Stype: begin
                 // Address = rs1 + imm_s; memory write data comes from rs2.
                 o_mem_write = 1'b1;
@@ -130,11 +144,13 @@ module decode (
             end
 
             `Btype: begin
-                o_branch    = 1'b1;
-                o_branch_op = funct3;
-                o_alu_a     = {{(`DATA_WIDTH-2){1'b0}}, `ALU_A_RS1};
-                o_alu_b     = {{(`DATA_WIDTH-2){1'b0}}, `ALU_B_RS2};
-                o_imm       = imm_b;
+                if (funct3 !== 3'b010 && funct3 !== 3'b011)begin
+                    o_branch    = 1'b1;
+                    o_branch_op = funct3;
+                    o_alu_a     = {{(`DATA_WIDTH-2){1'b0}}, `ALU_A_RS1};
+                    o_alu_b     = {{(`DATA_WIDTH-2){1'b0}}, `ALU_B_RS2};
+                    o_imm       = imm_b;
+                end
             end
 
             `Utype: begin
@@ -163,18 +179,6 @@ module decode (
                 o_alu_b      = {{(`DATA_WIDTH-2){1'b0}}, `ALU_B_FOUR};
                 o_result_mux = `RESULT_PC4;
                 o_imm        = imm_j;
-            end
-
-            `Itype_JALR: begin
-                // JALR: target is rs1 + imm_i; writeback is pc + 4.
-                o_branch     = 1'b1;
-                o_branch_op  = `BRANCH_JAL_JALR;
-                o_reg_write  = 1'b1;
-                o_alu_op     = `OP_ALU_ADD;
-                o_alu_a      = {{(`DATA_WIDTH-2){1'b0}}, `ALU_A_RS1};
-                o_alu_b      = {{(`DATA_WIDTH-2){1'b0}}, `ALU_B_IMM};
-                o_result_mux = `RESULT_PC4;
-                o_imm        = imm_i;
             end
 
             default: begin
