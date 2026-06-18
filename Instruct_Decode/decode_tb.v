@@ -63,6 +63,20 @@ module decode_tb;
     `assert(o_alu_b[1:0], `ALU_B_IMM)
     `assert(o_imm, 32'hffff_fffc)
 
+    // LW x5, -16(x3)
+    inst = {12'hff0, 5'd3, 3'b010, 5'd5, `Itype_L};
+  #5;
+    `assert(o_opcode, `Itype_L)
+    `assert(o_rd_addr, 5'd5)
+    `assert(o_rs1_addr, 5'd3)
+    `assert(o_reg_write, 1'b1)
+    `assert(o_mem_write, 1'b0)
+    `assert(o_branch, 1'b0)
+    `assert(o_alu_op, `OP_ALU_ADD)
+    `assert(o_alu_a[1:0], `ALU_A_RS1)
+    `assert(o_alu_b[1:0], `ALU_B_IMM)
+    `assert(o_result_mux, `RESULT_MEM)
+    `assert(o_imm, 32'hffff_fff0)
     // SW x2, 8(x1)
     inst = {7'b0000000, 5'd2, 5'd1, 3'b010, 5'b01000, `Stype};
   #5;
