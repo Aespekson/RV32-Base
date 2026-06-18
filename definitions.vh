@@ -5,9 +5,10 @@
 `define assert(signal, value) \
 if ((signal) !== (value)) begin \
     $display("FAIL: %s expected=%h got=%h time=%0t", \
-    `"signal`", value, signal, $time); \// Debugging has been fine so far, but this might be easier than manually checking the tb for expected and actual values
+    `"signal`", value, signal, $time); \
     $finish; \
     end
+    // Debugging has been fine so far, but this might be easier than manually checking the tb for expected and actual values
 
     // Various constants so that the rationale for length is immediately (or quickly) apparent
     `define DATA_WIDTH 32
