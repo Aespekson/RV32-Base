@@ -111,6 +111,7 @@ module decode (
             end
 
             `Itype_L: begin
+              if (funct3 == 3'b010) begin //LW only. May extend to LH and the like later. As of now, LB, LH, LBU, LHU will have no effect
                 // Address = rs1 + imm_i; writeback comes from data memory.
                 o_reg_write  = 1'b1;
                 o_alu_op     = `OP_ALU_ADD;
@@ -118,6 +119,8 @@ module decode (
                 o_alu_b      = {{(`DATA_WIDTH-2){1'b0}}, `ALU_B_IMM};
                 o_result_mux = `RESULT_MEM;
                 o_imm        = imm_i;
+              end
+
             end
 
             `Itype_JALR: begin
@@ -135,22 +138,31 @@ module decode (
             end
 
             `Stype: begin
+              if (funct3 == 3'b010) begin // SW only. May extend later. SB, SH will have no effect.
                 // Address = rs1 + imm_s; memory write data comes from rs2.
                 o_mem_write = 1'b1;
                 o_alu_op    = `OP_ALU_ADD;
                 o_alu_a     = {{(`DATA_WIDTH-2){1'b0}}, `ALU_A_RS1};
                 o_alu_b     = {{(`DATA_WIDTH-2){1'b0}}, `ALU_B_IMM};
                 o_imm       = imm_s;
+              end
             end
 
             `Btype: begin
-                if (funct3 !== 3'b010 && funct3 !== 3'b011)begin
-                    o_branch    = 1'b1;
-                    o_branch_op = funct3;
-                    o_alu_a     = {{(`DATA_WIDTH-2){1'b0}}, `ALU_A_RS1};
-                    o_alu_b     = {{(`DATA_WIDTH-2){1'b0}}, `ALU_B_RS2};
-                    o_imm       = imm_b;
-                end
+                case (funct3)
+                    `BRANCH_BEQ,
+                    `BRANCH_BNE,
+                    `BRANCH_BLT,
+                    `BRANCH_BGE,
+                    `BRANCH_BLTU,
+                    `BRANCH_BGEU: begin
+                        o_branch    = 1'b1;
+                        o_branch_op = funct3;
+                        o_alu_a     = `ALU_A_RS1;
+                        o_alu_b     = `ALU_B_RS2;
+                        o_imm       = imm_b;
+                    end
+                endcase
             end
 
             `Utype: begin
