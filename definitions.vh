@@ -28,6 +28,10 @@ if ((signal) !== (value)) begin \
     `define BRANCH_JAL_JALR 3'b010 // Jump in case of JAL or JALR instruction
     // opcodes above are from funct3 field. Be careful with 010. It is not specified as a branch code in specs
 
+    // Next-PC control. Used in the decoder to disambiguate next target.
+    `define PC_SRC_PC4      2'b00 //+4
+    `define PC_SRC_PC_IMM   2'b01 //JAL
+    `define PC_SRC_RS1_IMM  2'b10 //JALR
 
     // RV32I opcodes
     `define Rtype       7'b0110011
