@@ -305,6 +305,7 @@ module decode (
                         o_alu_a      = `ALU_A_RS1;
                         o_alu_b      = `ALU_B_RS2;
                         o_imm        = imm_b;
+                        o_pc_src = `PC_SRC_PC_IMM;
                     end
                     default: begin
                         // Defaults already safe
