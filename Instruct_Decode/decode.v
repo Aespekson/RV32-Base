@@ -16,13 +16,14 @@ module decode (
     output wire [`REG_ADDR_WIDTH-1:0] o_rs2_addr,
     output wire [`REG_ADDR_WIDTH-1:0] o_rd_addr,
     output reg  [`DATA_WIDTH-1:0]     o_imm,
-
     output reg                        o_mem_write,
+
+    output reg [1:0]                  o_pc_src, // Next PC, defaults to +4
 
     //Pipelining use signals/flags.
     output reg                        o_uses_rs1,
     output reg                        o_uses_rs2,
-    output reg                        o_illegal//Check if illegal instruction. Should make debugging much easier
+    output reg                        o_illegal // Check if illegal instruction. Should make debugging much easier
 
     /*
     Consider the following flags for the future. They may not be necessary, but they might make things easier. Decide later, during pipelining, whether these are or are not useful
@@ -67,14 +68,15 @@ module decode (
         // Must also note that, in the final pipeline, illegal instructions must not be allowed to retire as an ordinary NOP.
 
         o_alu_op     = `OP_ALU_NOP;
-        o_alu_a      = {{(`DATA_WIDTH-2){1'b0}}, `ALU_A_RS1};
-        o_alu_b      = {{(`DATA_WIDTH-2){1'b0}}, `ALU_B_RS2};
+        o_alu_a      = `ALU_A_RS1;
+        o_alu_b      = `ALU_B_RS2;
         o_result_mux = `RESULT_ALU;
         o_reg_write  = 1'b0;
         o_mem_write  = 1'b0;
         o_branch     = 1'b0;
         o_branch_op  = 3'b000;
         o_imm        = {`DATA_WIDTH{1'b0}};
+        o_pc_src     = `PC_SRC_PC4;
 
         case (opcode)
             `Rtype: begin
@@ -269,6 +271,7 @@ module decode (
                 o_alu_b      = `ALU_B_IMM;
                 o_result_mux = `RESULT_PC4;
                 o_imm        = imm_i;
+                o_pc_src = `PC_SRC_RS1_IMM;
               end
             end
 
@@ -338,6 +341,7 @@ module decode (
                 o_alu_b      = `ALU_B_FOUR;
                 o_result_mux = `RESULT_PC4;
                 o_imm        = imm_j;
+                o_pc_src = `PC_SRC_PC_IMM;
             end
 
             default: begin
