@@ -40,7 +40,7 @@ module top_tb;
   reg [`INST_WIDTH-1:0]       inst;
 
   wire [6:0]                  inst_opcode; //Remove here if removed in decode.v. Currently kept only for testing purposes.
-  wire [1:0]                  result_mux;
+  wire [1:0]                  result_sel;
   wire [`DATA_WIDTH-1:0]      imm;
 
   //Multiplexer ALU operand selects
@@ -92,7 +92,6 @@ module top_tb;
   //instruction memory signals
 
   reg [31:0] inst_mem_addr;
-//  wire [`INST_WIDTH-1:0] inst;// Declared with decoder
 
   instruction_memory inst_memory (
     .i_addr(inst_mem_addr),
@@ -125,6 +124,23 @@ module top_tb;
     );
 
   always #5 clk = ~clk;
+
+  //Multiplexers
+  always @* begin
+        case(alu_a_src)
+            `ALU_A_RS1: alu_a = i_rs1;
+            `ALU_A_PC: alu_a = i_PC;
+            `ALU_A_ZERO: alu_a = 0;
+  end
+
+  always @* begin
+    case (alu_b_src)
+        `ALU_B_RS2:  alu_b = rs2_data;
+        `ALU_B_IMM:  alu_b = imm;
+        `ALU_B_FOUR: alu_b = 32'd4;
+        default:     alu_b = 32'b0;
+    endcase
+  end
 
   initial begin
   /*
