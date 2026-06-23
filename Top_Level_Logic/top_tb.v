@@ -1,12 +1,12 @@
 `timescale 1ns/1ns
 `include "definitions.vh"
 
-module cpu_tb;
+module top_tb;
   // Things from all other testbenches ported here.
 
   // ALU signals
   reg clk;
-  reg [7:0] alu_op;
+  reg [`FUNCT7_WIDTH-1:0] alu_op;
   reg [`DATA_WIDTH-1:0] alu_a;
   reg [`DATA_WIDTH-1:0] alu_b;
 
@@ -39,19 +39,15 @@ module cpu_tb;
 
   reg [`INST_WIDTH-1:0]       inst;
 
-/*  wire [`ALU_OP_WIDTH-1:0]    o_alu_op;
-  wire [1:0]                  o_alu_a;
-  wire [1:0]                  o_alu_b;
-  wire                        o_branch;
-  wire [2:0]                  o_branch_op;*/ //Already declared in above sections.
   wire [6:0]                  inst_opcode; //Remove here if removed in decode.v. Currently kept only for testing purposes.
   wire [1:0]                  result_mux;
-/*  wire                        reg_we;
-  wire [`REG_ADDR_WIDTH-1:0]  rs1_addr;
-  wire [`REG_ADDR_WIDTH-1:0]  rs2_addr;
-  wire [`REG_ADDR_WIDTH-1:0]  rd_addr;*/ // Declared with reg file signals
   wire [`DATA_WIDTH-1:0]      imm;
 
+  //Multiplexer ALU operand selects
+  wire [1:0] alu_a_src;
+  wire [1:0] alu_b_src;
+
+  // Instruction flags
   wire                        inst_illegal;
   wire                        inst_uses_rs1;
   wire                        inst_uses_rs2;
@@ -59,8 +55,8 @@ module cpu_tb;
   decode decoder (
     .inst(inst),
     .o_alu_op(alu_op),
-    .o_alu_a(alu_a),
-    .o_alu_b(alu_b),
+    .o_alu_a(alu_a_src),
+    .o_alu_b(alu_b_src),
     .o_mem_write(data_we),
     .o_branch(branch),
     .o_branch_op(branch_op),
@@ -84,7 +80,7 @@ module cpu_tb;
   reg [31:0] wdataaddr;
   reg [31:0] rdataaddr;
 
-  data_memory dut (
+  data_memory data_mem (
     .clk(clk),
     .we(we),
     .raddr(rdataaddr),
@@ -95,10 +91,10 @@ module cpu_tb;
 
   //instruction memory signals
 
-  reg [$clog2(MEM_SIZE)-1:0] inst_mem_addr;
+  reg [31:0] inst_mem_addr;
 //  wire [`INST_WIDTH-1:0] inst;// Declared with decoder
 
-  instruction_memory dut (
+  instruction_memory inst_memory (
     .i_addr(inst_mem_addr),
     .o_inst(inst)
   );
@@ -116,7 +112,7 @@ module cpu_tb;
   wire [`DATA_WIDTH-1:0] rs1;
   wire [`DATA_WIDTH-1:0] rs2;
 
-    register_file dut (
+    register_file reg_file (
         .clk(clk),
         .we(reg_we),
         .rst(rst),
@@ -131,6 +127,7 @@ module cpu_tb;
   always #5 clk = ~clk;
 
   initial begin
+  /*
     //Defaults from all of the different test benches.
 
     // ALU defaults
@@ -160,8 +157,9 @@ module cpu_tb;
     rs1_addr = 5'b00000;
     rs2_addr = 5'b00000;
     rd = 32'h00000000;
+    */
   #5
-    $display("All good so far.")
+    $display("All Checks Passed.");
   #5
 
     $display("All Checks Passed.");
