@@ -1,7 +1,7 @@
 `define INST_WIDTH 32
 
 module instruction_memory (
-    input wire [`INST_WIDTH:0] i_addr,
+    input wire [`INST_WIDTH-1:0] i_addr,
     output reg [`INST_WIDTH-1:0] o_inst
 );
 
