@@ -56,5 +56,3 @@ module alu (
     end
 
 endmodule
-
-//(i_a < i_b) ? 32'h1 : 32'h0

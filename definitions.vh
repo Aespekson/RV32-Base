@@ -14,6 +14,7 @@ if ((signal) !== (value)) begin \
 `define DATA_WIDTH 32
 `define INST_WIDTH 32
 `define NUM_REGISTER 32
+`define REGISTER_WIDTH 32
 `define REG_ADDR_WIDTH 5
 `define ALU_OP_WIDTH 7
 `define FUNCT7_WIDTH 7
