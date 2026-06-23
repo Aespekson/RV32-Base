@@ -1,7 +1,7 @@
 `include "definitions.vh"
 
 module alu (
-    input wire [7:0] i_alu_op,
+    input wire [`FUNCT7_WIDTH-1:0] i_alu_op,
     input wire [`DATA_WIDTH-1:0] i_a,
     input wire [`DATA_WIDTH-1:0] i_b,
     output reg [`DATA_WIDTH-1:0] o_c
