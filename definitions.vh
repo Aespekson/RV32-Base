@@ -17,6 +17,7 @@ if ((signal) !== (value)) begin \
 `define REG_ADDR_WIDTH 5
 `define ALU_OP_WIDTH 7
 `define FUNCT7_WIDTH 7
+`define MEM_SIZE 1024
 
 // Branch opcodes. Conditional branch values match funct3.
 `define BRANCH_BEQ 3'b000 // Branch Equal
