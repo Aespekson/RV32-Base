@@ -6,108 +6,106 @@ module cpu_tb;
 
   // ALU signals
   reg clk;
-  reg [7:0] i_alu_op;
-  reg [`DATA_WIDTH-1:0] i_a;
-  reg [`DATA_WIDTH-1:0] i_b;
+  reg [7:0] alu_op;
+  reg [`DATA_WIDTH-1:0] alu_a;
+  reg [`DATA_WIDTH-1:0] alu_b;
 
-  wire [`DATA_WIDTH-1:0] o_c;
+  wire [`DATA_WIDTH-1:0] alu_o;
 
   alu alu (
-    .i_alu_op(i_alu_op),
-    .i_a(i_a),
-    .i_b(i_b),
-    .o_c(o_c)
+    .i_alu_op(alu_op),
+    .i_a(alu_a),
+    .i_b(alu_b),
+    .o_c(alu_o)
   );
 
   //Branching logic signals
-  reg i_branch;
-  reg [2:0] i_branch_op;
-  reg [`DATA_WIDTH-1:0] i_a;
-  reg [`DATA_WIDTH-1:0] i_b;
+  reg branch;
+  reg [2:0] branch_op;
+  reg [`DATA_WIDTH-1:0] branch_a;
+  reg [`DATA_WIDTH-1:0] branch_b;
 
-  wire o_take;
+  wire take_branch;
 
   branch_log brancher (
-    .i_branch(i_branch),
-    .i_branch_op(i_branch_op),
-    .i_a(i_a),
-    .i_b(i_b),
-    .o_take(o_take)
+    .i_branch(branch),
+    .i_branch_op(branch_op),
+    .i_a(branch_a),
+    .i_b(branch_b),
+    .o_take(take_branch)
   );
 
   // Decoder signals
 
   reg [`INST_WIDTH-1:0]       inst;
 
-  wire [`ALU_OP_WIDTH-1:0]    o_alu_op;
+/*  wire [`ALU_OP_WIDTH-1:0]    o_alu_op;
   wire [1:0]                  o_alu_a;
   wire [1:0]                  o_alu_b;
   wire                        o_branch;
-  wire [2:0]                  o_branch_op;
-  wire [6:0]                  o_opcode; //Remove here if removed in decode.v. Currently kept only for testing purposes.
-  wire [1:0]                  o_result_mux;
-  wire                        o_reg_write;
-  wire [`REG_ADDR_WIDTH-1:0]  o_rs1_addr;
-  wire [`REG_ADDR_WIDTH-1:0]  o_rs2_addr;
-  wire [`REG_ADDR_WIDTH-1:0]  o_rd_addr;
-  wire [`DATA_WIDTH-1:0]      o_imm;
-  wire                        o_mem_write;
+  wire [2:0]                  o_branch_op;*/ //Already declared in above sections.
+  wire [6:0]                  inst_opcode; //Remove here if removed in decode.v. Currently kept only for testing purposes.
+  wire [1:0]                  result_mux;
+/*  wire                        reg_we;
+  wire [`REG_ADDR_WIDTH-1:0]  rs1_addr;
+  wire [`REG_ADDR_WIDTH-1:0]  rs2_addr;
+  wire [`REG_ADDR_WIDTH-1:0]  rd_addr;*/ // Declared with reg file signals
+  wire [`DATA_WIDTH-1:0]      imm;
 
-  wire                        o_illegal;
-  wire                        o_uses_rs1;
-  wire                        o_uses_rs2;
+  wire                        inst_illegal;
+  wire                        inst_uses_rs1;
+  wire                        inst_uses_rs2;
 
   decode decoder (
     .inst(inst),
-    .o_alu_op(o_alu_op),
-    .o_alu_a(o_alu_a),
-    .o_alu_b(o_alu_b),
-    .o_mem_write(o_mem_write),
-    .o_branch(o_branch),
-    .o_branch_op(o_branch_op),
-    .o_opcode(o_opcode),
-    .o_result_mux(o_result_mux),
-    .o_reg_write(o_reg_write),
-    .o_rs1_addr(o_rs1_addr),
-    .o_rs2_addr(o_rs2_addr),
-    .o_rd_addr(o_rd_addr),
-    .o_imm(o_imm),
-    .o_illegal(o_illegal),
-    .o_uses_rs1(o_uses_rs1),
-    .o_uses_rs2(o_uses_rs2)
+    .o_alu_op(alu_op),
+    .o_alu_a(alu_a),
+    .o_alu_b(alu_b),
+    .o_mem_write(data_we),
+    .o_branch(branch),
+    .o_branch_op(branch_op),
+    .o_opcode(inst_opcode),
+    .o_result_mux(result_mux),
+    .o_reg_write(reg_we),
+    .o_rs1_addr(rs1_addr),
+    .o_rs2_addr(rs2_addr),
+    .o_rd_addr(rd_addr),
+    .o_imm(imm),
+    .o_illegal(inst_illegal),
+    .o_uses_rs1(inst_uses_rs1),
+    .o_uses_rs2(inst_uses_rs2)
   );
 
   // Data Memory signals
 
-  reg we;
+  reg data_we;
   reg [31:0] wdata;
   wire [31:0] rdata;
-  reg [31:0] waddr;
-  reg [31:0] raddr;
+  reg [31:0] wdataaddr;
+  reg [31:0] rdataaddr;
 
   data_memory dut (
     .clk(clk),
     .we(we),
-    .raddr(raddr),
-    .waddr(waddr),
+    .raddr(rdataaddr),
+    .waddr(wdataaddr),
     .wdata(wdata),
     .rdata(rdata)
   );
 
   //instruction memory signals
 
-  reg [$clog2(MEM_SIZE)-1:0] addr;
-  wire [`INST_WIDTH-1:0] inst;
+  reg [$clog2(MEM_SIZE)-1:0] inst_mem_addr;
+//  wire [`INST_WIDTH-1:0] inst;// Declared with decoder
 
   instruction_memory dut (
-    .i_addr(addr),
+    .i_addr(inst_mem_addr),
     .o_inst(inst)
   );
 
   // Register file signals
 
-  reg clk;
-  reg we;
+  reg reg_we;
   reg rst;
 
   reg [$clog2(`NUM_REGISTER)-1:0] rd_addr;
@@ -120,7 +118,7 @@ module cpu_tb;
 
     register_file dut (
         .clk(clk),
-        .we(we),
+        .we(reg_we),
         .rst(rst),
         .rd_addr(rd_addr),
         .rd(rd),
@@ -137,31 +135,34 @@ module cpu_tb;
 
     // ALU defaults
     clk = 1'b0;
-    i_a = 32'h00000000;
-    i_b = 32'h00000000;
-    i_alu_op = 32'h00000000;
+    alu_a = 32'h00000000;
+    alu_b = 32'h00000000;
+    alu_op = 32'h00000000;
 
     // Branching defaults
-    i_branch = 1'b0;
-    i_branch_op = 3'b000;
-    i_a_branch = 32'h00000000;
-    i_b_branch = 32'h00000000;
+    branch = 1'b0;
+    branch_op = 3'b000;
+    branch_a = 32'h00000000;
+    branch_b = 32'h00000000;
 
     // Data Memory defaults
     wdata = 32'h00000000;
-    waddr = 32'h00000000;
-    raddr = 32'h00000000;
+    wdataaddr = 32'h00000000;
+    rdataaddr = 32'h00000000;
 
     // No decoder defaults
 
     // instruction memory defaults
-    addr = 32'h00000000;
+    inst_mem_addr = 32'h00000000;
 
     // Register file defaults
     rd_addr = 5'b00000;
     rs1_addr = 5'b00000;
     rs2_addr = 5'b00000;
     rd = 32'h00000000;
+  #5
+    $display("All good so far.")
+  #5
 
     $display("All Checks Passed.");
     $finish;
