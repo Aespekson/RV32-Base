@@ -13,6 +13,7 @@ if ((signal) !== (value)) begin \
 // Various constants so that the rationale for length is immediately (or quickly) apparent
 `define DATA_WIDTH 32
 `define INST_WIDTH 32
+`define INST_MEM_DEPTH 32
 `define NUM_REGISTER 32
 `define REGISTER_WIDTH 32
 `define REG_ADDR_WIDTH 5

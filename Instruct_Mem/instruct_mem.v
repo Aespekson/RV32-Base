@@ -1,27 +1,29 @@
-`define INST_WIDTH 32
+`include "definitions.vh"
 
-module instruction_memory (
-    input wire [`INST_WIDTH-1:0] i_addr,
-    output reg [`INST_WIDTH-1:0] o_inst
+module instruction_memory #(
+    parameter integer ADDR_WIDTH = $clog2(`INST_MEM_DEPTH)
+) (
+    input  wire [`INST_WIDTH-1:0] i_addr,
+    output reg  [`INST_WIDTH-1:0] o_inst
 );
 
-    reg [`INST_WIDTH-1:0] memory [0:`INST_WIDTH-1];
+    reg [`INST_WIDTH-1:0] memory [0:`INST_MEM_DEPTH-1];
+
+    integer i;
 
     initial begin
-        memory[0] = 32'h00108113;
-        memory[1] = 32'h00108193;
-        memory[2] = 32'h00310233;
-        memory[3] = 32'hfe218ae3;
-        memory[4] = 32'h00000000;
+        // Fill other addresses
+        for (i = 0; i < `INST_MEM_DEPTH; i = i + 1)
+            memory[i] = 32'h00000013; // addi x0, x0, 0
+
+        memory[0] = 32'h00108113; // addi x2, x1, 1
+        memory[1] = 32'h00108193; // addi x3, x1, 1
+        memory[2] = 32'h00310233; // add  x4, x2, x3
+        memory[3] = 32'hfe218ae3; // beq  x3, x2, -12
     end
 
     always @* begin
-        o_inst = memory[i_addr[`INST_WIDTH-1:2]];
+        o_inst = memory[i_addr[ADDR_WIDTH+1:2]];
     end
-endmodule
 
-/*(
-    // MEM_SIZE in Words
-    // Currently commented out because it doesn't seem to be necessary but I want to keep it just in case as a reminder
-    // parameter MEM_SIZE = 1024
-)*/
+endmodule
