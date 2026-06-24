@@ -1,5 +1,4 @@
-`define DATA_WIDTH 32
-`define NUM_REGISTER 32 //Some reliance on these macros were removed from other modules, but it has the value of adjusting automatically if I wish to change them, so those will be reintroduced there later.
+`include "definitions.vh"
 
 module register_file(
   input wire clk,
@@ -16,14 +15,14 @@ module register_file(
   logic [`DATA_WIDTH-1:0] registers [`NUM_REGISTER-1:0];
   integer i;
 
-  always_comb begin
+  always begin
     if (rs1_addr == 0) rs1 = 0;
     else rs1 = registers[rs1_addr];
     if (rs2_addr == 0) rs2 = 0; // x0 hardwired to 0
     else rs2 = registers[rs2_addr];
   end
-  // Note: Same-cycle read-write behavior is not defined here. This will likely be addressed later via forwarding in the decoder module.
-  always_ff @(posedge clk) begin
+
+  always @(posedge clk) begin
     if (rst) begin
       for (int i = 0; i < `NUM_REGISTER; i++) registers[i]<= 32'h00000000;
     end
