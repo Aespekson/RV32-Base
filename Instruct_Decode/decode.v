@@ -4,8 +4,8 @@ module decode (
     input  wire [`INST_WIDTH-1:0]     inst,
 
     output reg  [`ALU_OP_WIDTH-1:0]   o_alu_op,
-    output reg  [1:0]     o_alu_a,
-    output reg  [1:0]     o_alu_b,
+    output reg  [1:0]                 o_alu_a,
+    output reg  [1:0]                 o_alu_b,
 
     output reg                        o_branch,
     output reg  [2:0]                 o_branch_op,
@@ -14,7 +14,7 @@ module decode (
     output reg                        o_reg_write,
     output wire [`REG_ADDR_WIDTH-1:0] o_rs1_addr,
     output wire [`REG_ADDR_WIDTH-1:0] o_rs2_addr,
-    output wire [`REG_ADDR_WIDTH-1:0] o_rd_addr,
+    output wire [`REG_ADDR_WIDTH-1:0] o_write_addr,
     output reg  [`DATA_WIDTH-1:0]     o_imm,
     output reg                        o_mem_write,
 
@@ -55,7 +55,7 @@ module decode (
 
 
     assign o_opcode   = opcode; //Remove if o_opcode is removed
-    assign o_rd_addr  = rd;
+    assign o_write_addr  = rd;
     assign o_rs1_addr = rs1;
     assign o_rs2_addr = rs2;
 
