@@ -14,7 +14,10 @@ module top_tb;
   always #5 clk = ~clk;
 
   initial begin
-
+    clk = 1'b0;
+    rst = 1'b0
+  #5
+    rst = 1'b0;
   #5
     $display("All Checks Passed.");
   #5
