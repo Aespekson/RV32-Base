@@ -88,6 +88,10 @@ module cpu_top;
   reg [31:0]  wdataaddr;
   reg [31:0]  rdataaddr;
 
+  assign wdataaddr = alu_o;
+  assign rdataaddr = alu_o;
+  assign wdata     = rs2;
+
   data_memory data_mem (
     .clk(clk),
     .we(data_we),
@@ -170,7 +174,7 @@ module cpu_top;
   always @* begin
     case (result_src)
       `RESULT_ALU: write_data = alu_o;
-      `RESULT_MEM: write_data = rs1;
+      `RESULT_MEM: write_data = rdata;
       `RESULT_PC4: write_data = PC + 4;
       `RESULT_IMM: write_data = imm;
       default:     write_data = 32'b0;
