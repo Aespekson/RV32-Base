@@ -1,4 +1,4 @@
-`define DATA_WIDTH 32
+`include "definitions.vh"
 
 module data_memory #(
     parameter MEM_SIZE = 1024 //words
@@ -15,7 +15,7 @@ module data_memory #(
     integer i;
 
     initial begin
-        //Initializing all words; having undefined memory bothers me, even if I don't see it.
+        //Initializing everything
         for (i = 0; i < MEM_SIZE; i = i + 1) memory[i] = 32'h0;
         memory[0] = 32'h00000000;
         memory[1] = 32'h00000001;
