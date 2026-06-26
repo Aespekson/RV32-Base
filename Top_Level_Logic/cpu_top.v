@@ -93,12 +93,10 @@ module cpu_top;
     .rdata(rdata)
   );
 
-  //instruction memory signals
-
-  reg [31:0] inst_mem_addr;
+  //No instruction memory signals not declared elsewhere
 
   instruction_memory inst_memory (
-    .i_addr(inst_mem_addr),
+    .i_addr(PC),
     .o_inst(inst)
   );
 
@@ -127,8 +125,6 @@ module cpu_top;
         .rs2(rs2)
     );
 
-  always #5 clk = ~clk;
-
   //Multiplexers
   always @* begin
         case(alu_a_src)
@@ -148,14 +144,22 @@ module cpu_top;
     endcase
   end
 
-  reg [5:0] PC;
+  reg [31:0]  PC;
+  wire [31:0] next_PC;
+
+  always @(posedge clk) begin
+    if (rst)
+        PC <= 32'h0000_0000;
+    else
+        PC <= next_PC;
+  end
 
   always @* begin
     case (pc_src)
-      `PC_SRC_PC4: PC = PC + 4;
-      `PC_SRC_PC_IMM: PC = PC + imm;
-      `PC_SRC_RS1_IMM: PC = rs1_addr + imm;
-      default: PC = PC + 4;
+      `PC_SRC_PC4:     next_PC = PC + 4;
+      `PC_SRC_PC_IMM:  next_PC = PC + imm;
+      `PC_SRC_RS1_IMM: next_PC = rs1_addr + imm;
+      default:         next_PC = PC + 4;
     endcase
   end
 

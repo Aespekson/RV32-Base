@@ -11,6 +11,7 @@ module top_tb;
   .rst(rst)
   )
 
+  always #5 clk = ~clk;
 
   initial begin
 
@@ -51,7 +52,7 @@ endmodule
     // No decoder defaults
 
     // instruction memory defaults
-    inst_mem_addr = 32'h00000000;
+    PC = 32'h00000000;
 
     // Register file defaults
     write_addr = 5'b00000;
