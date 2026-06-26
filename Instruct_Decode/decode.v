@@ -39,6 +39,8 @@ module decode (
     wire [4:0] rs1    = inst[19:15];
     wire [4:0] rs2    = inst[24:20];
     wire [6:0] funct7 = inst[31:25];
+    wire [31:0] PC;
+    wire [31:0] rs1_data;
 
     wire [`DATA_WIDTH-1:0] imm_i = {{20{inst[31]}}, inst[31:20]};
     wire [`DATA_WIDTH-1:0] imm_s = {{20{inst[31]}}, inst[31:25], inst[11:7]};
@@ -46,21 +48,13 @@ module decode (
     wire [`DATA_WIDTH-1:0] imm_u = {inst[31:12], 12'b0};
     wire [`DATA_WIDTH-1:0] imm_j = {{11{inst[31]}}, inst[31], inst[19:12], inst[20], inst[30:21], 1'b0};
 
-    /*
-    Necessary once pc and rs1_data are available
-
-    wire [31:0] pc_imm_target   = pc + imm;
-    wire [31:0] rs1_imm_target  = (rs1_data + imm) & 32'hffff_fffe;
-    */
-
-
     assign o_opcode   = opcode; //Remove if o_opcode is removed
     assign o_write_addr  = rd;
     assign o_rs1_addr = rs1;
     assign o_rs2_addr = rs2;
 
     always @* begin
-        o_illegal = 1'b1;
+        o_illegal    = 1'b1;
         o_uses_rs1   = 1'b0;
         o_uses_rs2   = 1'b0;
         // Safe defaults: unsupported instructions behave like a NOP.
