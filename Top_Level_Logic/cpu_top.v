@@ -1,5 +1,6 @@
 `timescale 1ns/1ns
 `include "definitions.vh"
+`default_nettype none // To catch wires that have not been explicitly declared
 
 module cpu_top;
 
@@ -34,6 +35,9 @@ module cpu_top;
     .i_b(branch_b),
     .o_take(take_branch)
   );
+
+  assign branch_a = rs1;
+  assign branch_b = rs2;
 
   // Decoder signals
 
@@ -78,15 +82,15 @@ module cpu_top;
 
   // Data Memory signals
 
-  reg data_we;
-  reg [31:0] wdata;
+  reg         data_we;
+  reg [31:0]  wdata;
   wire [31:0] rdata;
-  reg [31:0] wdataaddr;
-  reg [31:0] rdataaddr;
+  reg [31:0]  wdataaddr;
+  reg [31:0]  rdataaddr;
 
   data_memory data_mem (
     .clk(clk),
-    .we(we),
+    .we(data_we),
     .raddr(rdataaddr),
     .waddr(wdataaddr),
     .wdata(wdata),
@@ -157,8 +161,8 @@ module cpu_top;
   always @* begin
     case (pc_src)
       `PC_SRC_PC4:     next_PC = PC + 4;
-      `PC_SRC_PC_IMM:  next_PC = PC + imm;
-      `PC_SRC_RS1_IMM: next_PC = rs1_addr + imm;
+      `PC_SRC_PC_IMM:  if (take_branch) next_PC = PC + imm;
+      `PC_SRC_RS1_IMM: if (take_branch) next_PC = rs1 + imm & 32'hFFFF_FFFE; //JALR target ignores lowest bit because it cannot guarantee rs1 is byte aligned.
       default:         next_PC = PC + 4;
     endcase
   end
