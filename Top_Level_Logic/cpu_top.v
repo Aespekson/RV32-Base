@@ -2,11 +2,13 @@
 `include "definitions.vh"
 `default_nettype none // To catch wires that have not been explicitly declared
 
-module cpu_top;
+module cpu_top(
+  input wire clk,
+  input wire rst
+);
 
   // ALU signals
 
-  reg clk;
   reg [`FUNCT7_WIDTH-1:0] alu_op;
   reg [`DATA_WIDTH-1:0] alu_a;
   reg [`DATA_WIDTH-1:0] alu_b;
@@ -111,7 +113,6 @@ module cpu_top;
   // Register file signals
 
   reg reg_we;
-  reg rst;
 
   reg [$clog2(`NUM_REGISTER)-1:0] write_addr;
   reg [$clog2(`NUM_REGISTER)-1:0] rs1_addr;
@@ -153,10 +154,10 @@ module cpu_top;
   end
 
   reg [31:0]  PC;
-  wire [31:0] next_PC;
+  reg [31:0] next_PC;
 
   always @(posedge clk) begin
-    if (rst)
+    if (!rst)
         PC <= 32'h0000_0000;
     else
         PC <= next_PC;
