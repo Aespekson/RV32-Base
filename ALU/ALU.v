@@ -7,6 +7,8 @@ module alu (
     output reg [`DATA_WIDTH-1:0] o_c
 );
 
+    reg [63:0] prod;
+
     always @* begin
         case (i_alu_op)
             `OP_ALU_ADD:    o_c = i_a + i_b;
@@ -51,7 +53,10 @@ module alu (
                 o_c = 32'h0;
             end
 
-            default: o_c = 0;
+            default: begin
+                o_c = 32'h0;
+                prod = 64'h0;
+            end
         endcase
     end
 
