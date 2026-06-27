@@ -22,8 +22,23 @@ module instruction_memory #(
         memory[2] = 32'h00310233; // add  x4, x2, x3  // Adds x2 and x3 and stores at x4
         memory[3] = 32'hfe218ae3; // beq  x3, x2, -12 // Offsets PC by -12 if values at x3 and x2 equal.
 */
+
 /*
-        // Test program 2.
+        Expected final values for program 2:
+            x1  = 20          = 32'h00000014
+            x2  = 6           = 32'h00000006
+            x3  = 14          = 32'h0000000e
+            x4  = 4           = 32'h00000004
+            x5  = 22          = 32'h00000016
+            x6  = 18          = 32'h00000012
+            x7  = 24          = 32'h00000018
+            x8  = 2           = 32'h00000002
+            x9  = 5           = 32'h00000005
+            x10 = -16         = 32'hfffffff0
+            x11 = -4          = 32'hfffffffc
+*/
+
+        // Test program 2. Rtype arithmetic, logic, reg shifts
         memory[0]  = 32'h01400093; // addi x1,  x0, 20
         memory[1]  = 32'h00600113; // addi x2,  x0, 6
         memory[2]  = 32'h402081b3; // sub  x3,  x1, x2
@@ -36,9 +51,22 @@ module instruction_memory #(
         memory[9]  = 32'hff000513; // addi x10, x0, -16
         memory[10] = 32'h408555b3; // sra  x11, x10, x8
         memory[11] = 32'h0000006f; // jal  x0, 0
-*/
+
 /*
-        // Test program 3.
+    Expected final values for program 3:
+        x1 = 32'hffffffff  // -1 signed, UINT32_MAX unsigned
+        x2 = 1            // -1 < 1 using signed comparison
+        x3 = 0            // UINT32_MAX < 1 is false
+        x4 = 32'hffffff00
+        x5 = 32'h00000155
+        x6 = 32'h00000005
+        x7 = 32'h00000028 // 40
+        x8 = 32'h0000000a // 10
+        x9 = 32'hffffffff // arithmetic shift of -1
+*/
+
+/*
+        // Test program 3. Imm logic, comparisons, and shifts
         memory[0] = 32'hfff00093; // addi  x1, x0, -1
         memory[1] = 32'h0010a113; // slti  x2, x1, 1
         memory[2] = 32'h0010b193; // sltiu x3, x1, 1
@@ -50,8 +78,24 @@ module instruction_memory #(
         memory[8] = 32'h4040d493; // srai  x9, x1, 4
         memory[9] = 32'h0000006f; // jal   x0, 0
 */
+
 /*
-        // Test program 4.
+    Expected final values for program 4:
+        x1 = 32'hffffffff
+        x2 = 1
+
+        x3 = 1
+        x4 = 1
+        x5 = 1
+        x6 = 1
+        x7 = 1
+        x8 = 1
+
+    No result register should contain 99.
+*/
+
+/*
+        // Test program 4. All 6 branch conditions
         memory[0]  = 32'hfff00093; // addi x1, x0, -1
         memory[1]  = 32'h00100113; // addi x2, x0, 1
 
@@ -80,8 +124,20 @@ module instruction_memory #(
 
         memory[19] = 32'h0000006f; // jal x0, 0
 */
+
 /*
-        // Test program 5.
+    Expected final values for program 5:
+        x1 = 32'h12345000  // LUI result
+        x2 = 32'h00001004  // AUIPC at PC=4: 4 + 0x1000
+        x3 = 32'h0000000c  // JAL link address: PC 8 + 4
+        x4 = 4             // value 99 was skipped
+        x5 = 32            // JALR destination
+        x6 = 28            // JALR link address: PC 24 + 4
+        x7 = 7             // value 99 was skipped
+*/
+
+/*
+        // Test program 5. LUI, AUIPC, JAL, JALR
         memory[0] = 32'h123450b7; // lui   x1, 0x12345
         memory[1] = 32'h00001117; // auipc x2, 0x1
         memory[2] = 32'h008001ef; // jal   x3, +8
@@ -95,6 +151,19 @@ module instruction_memory #(
 
         memory[9] = 32'h0000006f; // jal x0, 0
 */
+
+/*
+    Expected final values for program 6:
+        x2 = 37
+        x3 = 37
+        x4 = 42
+        x5 = 42
+
+    Expected data memory:
+        address 0 = 37 = 32'h00000025
+        address 4 = 42 = 32'h0000002a
+*/
+
 /*
         // Test program 6.
         memory[0] = 32'h02500113; // addi x2, x0, 37
