@@ -1,7 +1,7 @@
 module  alu_tb;
 
   reg clk;
-  reg [7:0] i_alu_op = 8'b00000000;
+  reg [6:0] i_alu_op = 7'b0000000;
   reg [`DATA_WIDTH-1:0] i_a = 32'h00000000;
   reg [`DATA_WIDTH-1:0] i_b = 32'h00000000;
 
