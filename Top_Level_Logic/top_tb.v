@@ -13,14 +13,27 @@ module top_tb;
 
   always #1 clk = ~clk;
 
+  reg test_complete;
+
   initial begin
-    clk = 1'b0;
-    rst = 1'b1;
-  #10
-    rst = 1'b0;
-  #15
-    $display("All Checks Passed.");
-    $finish;
+      test_complete = 1'b0;
+
+      wait (cpu.inst === 32'h0000006f);
+      test_complete = 1'b1;
+
+      #15;
+      // Auto-verification logic here.
+
+      $display("TB completed successfully.");
+      $finish;
+  end
+
+  initial begin
+      clk = 1'b0;
+      rst = 1'b1;
+
+      #10;
+      rst = 1'b0;
   end
 
   initial begin
@@ -29,34 +42,3 @@ module top_tb;
   end
 
 endmodule
-  /*
-    //Defaults from all of the different test benches.
-
-    // ALU defaults
-    clk = 1'b0;
-    alu_a = 32'h00000000;
-    alu_b = 32'h00000000;
-    alu_op = 32'h00000000;
-
-    // Branching defaults
-    branch = 1'b0;
-    branch_op = 3'b000;
-    branch_a = 32'h00000000;
-    branch_b = 32'h00000000;
-
-    // Data Memory defaults
-    wdata = 32'h00000000;
-    wdataaddr = 32'h00000000;
-    rdataaddr = 32'h00000000;
-
-    // No decoder defaults
-
-    // instruction memory defaults
-    PC = 32'h00000000;
-
-    // Register file defaults
-    write_addr = 5'b00000;
-    rs1_addr = 5'b00000;
-    rs2_addr = 5'b00000;
-    write_data = 32'h00000000;
-    */
