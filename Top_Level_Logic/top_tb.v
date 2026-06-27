@@ -11,12 +11,12 @@ module top_tb;
   .rst(rst)
   );
 
-  always #5 clk = ~clk;
+  always #1 clk = ~clk;
 
   initial begin
     clk = 1'b0;
     rst = 1'b1;
-  #5
+  #10
     rst = 1'b0;
   #15
     $display("All Checks Passed.");

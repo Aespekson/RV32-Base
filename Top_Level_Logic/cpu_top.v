@@ -157,7 +157,7 @@ module cpu_top(
   reg [31:0] next_PC;
 
   always @(posedge clk) begin
-    if (!rst)
+    if (rst)
         PC <= 32'h0000_0000;
     else
         PC <= next_PC;
