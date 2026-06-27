@@ -1,1 +1,1 @@
-/home/aespekson/Desktop/Tools/RV32-Base/Instruct_Mem/instruct_mem.v
+../Instruct_Mem/instruct_mem.v
