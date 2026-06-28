@@ -15,13 +15,14 @@ module instruction_memory #(
         // Fill other addresses
         for (i = 0; i < `INST_MEM_DEPTH; i = i + 1)
             memory[i] = 32'h00000013; // addi x0, x0, 0
-/*
-        // Test program 1. Uncomment to load a particular program.
+
+        // Test program 1.
         memory[0] = 32'h00108113; // addi x2, x1, 1   // Adds value at x1 to 1 and stores at x2
         memory[1] = 32'h00108193; // addi x3, x1, 1   // Adds value at x1 to 1 and stores at x3
         memory[2] = 32'h00310233; // add  x4, x2, x3  // Adds x2 and x3 and stores at x4
-        memory[3] = 32'hfe218ae3; // beq  x3, x2, -12 // Offsets PC by -12 if values at x3 and x2 equal.
-*/
+        memory[3] = 32'h00218663; // beq x3, x2, +12  // Offsets PC by +12 bytes if values at x3 and x2 are equal.
+        memory[6] = 32'h0000006f; // jal  x0, 0       // Infinite loop to end program
+
 
 /*
         Expected final values for program 2:
@@ -37,7 +38,7 @@ module instruction_memory #(
             x10 = -16         = 32'hfffffff0
             x11 = -4          = 32'hfffffffc
 */
-
+/*
         // Test program 2. Rtype arithmetic, logic, reg shifts
         memory[0]  = 32'h01400093; // addi x1,  x0, 20
         memory[1]  = 32'h00600113; // addi x2,  x0, 6
@@ -51,7 +52,7 @@ module instruction_memory #(
         memory[9]  = 32'hff000513; // addi x10, x0, -16
         memory[10] = 32'h408555b3; // sra  x11, x10, x8
         memory[11] = 32'h0000006f; // jal  x0, 0
-
+*/
 /*
     Expected final values for program 3:
         x1 = 32'hffffffff  // -1 signed, UINT32_MAX unsigned
