@@ -1,6 +1,4 @@
-// Unique to this tb rn. Will not move to definitions for now.
-`define incrementpass \
-        passed++;
+
 
 module  branch_unit_tb;
 
@@ -39,7 +37,7 @@ module  branch_unit_tb;
     i_b = 0;
     #10
       `assert(dut.o_take, 1'b0);// Tests equal op in case that arguments are equal and not equal
-      `incrementpass //System Verilog. If testing with pure verilog interpreter, change. Others marked with //* and number of ops tested so you can find them easier
+      passed = passed + 1; //System Verilog. If testing with pure verilog interpreter, change. Others marked with //* and number of ops tested so you can find them easier
     i_branch = 0;
     #10;
       `assert(dut.o_take, 1'b0);// Tests that enable signal (i_branch) works properly. Not an operation
@@ -55,7 +53,7 @@ module  branch_unit_tb;
     i_a = 0;
     #10
       `assert(dut.o_take, 1'b1);
-      `incrementpass//* 2
+      passed = passed + 1;
     i_branch_op = `BRANCH_BLT;
     #10
       `assert(dut.o_take, 1'b0);
@@ -65,7 +63,7 @@ module  branch_unit_tb;
     i_a = 32'hB000000B;
     #10
       `assert(dut.o_take, 1'b1);
-      `incrementpass//* 3
+      passed = passed + 1;
     i_branch_op = `BRANCH_BGE;
     #10
       `assert(dut.o_take, 1'b0);
@@ -75,7 +73,7 @@ module  branch_unit_tb;
     i_a = 0;
     #10
       `assert(dut.o_take, 1'b1);
-      `incrementpass//* 4
+      passed = passed + 1;
     i_branch_op = `BRANCH_BLTU;
     i_a = 0;
     #10
@@ -86,7 +84,7 @@ module  branch_unit_tb;
     i_a = 32'hB000000B;
     #10
       `assert(dut.o_take, 1'b0);
-      `incrementpass//* 5
+      passed = passed + 1;
     i_branch_op = `BRANCH_BGEU;
     #10
       `assert(dut.o_take, 1'b1);
@@ -96,17 +94,16 @@ module  branch_unit_tb;
     i_a = 0;
     #10
       `assert(dut.o_take, 1'b0);
-      `incrementpass//* 6
+      passed = passed + 1;
     i_branch_op = `BRANCH_JAL_JALR;
     #10
       `assert(dut.o_take, 1'b1)
-      `incrementpass//* 7
+      passed = passed + 1;
     #10;
     i_branch_op = 3'b011;// Testing the one illegal opcode; not an operation; should default to 0
     #10
       `assert(dut.o_take, 1'b0)
-      `incrementpass //* 8
-      //Even though it isn't an operation, I feel the need to signal it is complete some way
+      passed = passed + 1;
     #10
     $finish;
 

@@ -1,6 +1,5 @@
 `timescale 1ns/1ns
 `include "definitions.vh"
-`default_nettype none // To catch wires that have not been explicitly declared
 
 module cpu_top(
   input wire clk,
@@ -9,7 +8,7 @@ module cpu_top(
 
   // ALU signals
 
-  reg [`FUNCT7_WIDTH-1:0] alu_op;
+  wire [`FUNCT7_WIDTH-1:0] alu_op;
   reg [`DATA_WIDTH-1:0] alu_a;
   reg [`DATA_WIDTH-1:0] alu_b;
 
@@ -23,10 +22,10 @@ module cpu_top(
   );
 
   //Branching logic signals
-  reg branch;
-  reg [2:0] branch_op;
-  reg [`DATA_WIDTH-1:0] branch_a;
-  reg [`DATA_WIDTH-1:0] branch_b;
+  wire branch;
+  wire [2:0] branch_op;
+  wire [`DATA_WIDTH-1:0] branch_a;
+  wire [`DATA_WIDTH-1:0] branch_b;
 
   wire take_branch;
 
@@ -38,19 +37,16 @@ module cpu_top(
     .o_take(take_branch)
   );
 
-  assign branch_a = rs1;
-  assign branch_b = rs2;
-
   // Decoder signals
 
-  reg [`INST_WIDTH-1:0]       inst;
+  wire [`INST_WIDTH-1:0]       inst;
 
   wire [6:0]                  inst_opcode; //Remove here if removed in decode.v. Currently kept only for testing purposes.
   wire [`DATA_WIDTH-1:0]      imm;
 
   //Multiplexer ALU operand selects
-  wire [1:0] alu_a_src;
-  wire [1:0] alu_b_src;
+  wire                         [1:0] alu_a_src;
+  wire                         [1:0] alu_b_src;
 
   // PC/result Multiplexer selects
   wire [1:0]                  pc_src;
@@ -84,11 +80,11 @@ module cpu_top(
 
   // Data Memory signals
 
-  reg         data_we;
-  reg [31:0]  wdata;
+  wire         data_we;
+  wire [31:0]  wdata;
   wire [31:0] rdata;
-  reg [31:0]  wdataaddr;
-  reg [31:0]  rdataaddr;
+  wire [31:0]  wdataaddr;
+  wire [31:0]  rdataaddr;
 
   assign wdataaddr = alu_o;
   assign rdataaddr = alu_o;
@@ -112,11 +108,11 @@ module cpu_top(
 
   // Register file signals
 
-  reg reg_we;
+  wire reg_we;
 
-  reg [$clog2(`NUM_REGISTER)-1:0] write_addr;
-  reg [$clog2(`NUM_REGISTER)-1:0] rs1_addr;
-  reg [$clog2(`NUM_REGISTER)-1:0] rs2_addr;
+  wire [$clog2(`NUM_REGISTER)-1:0] write_addr;
+  wire [$clog2(`NUM_REGISTER)-1:0] rs1_addr;
+  wire [$clog2(`NUM_REGISTER)-1:0] rs2_addr;
 
   reg [`DATA_WIDTH-1:0] write_data;
   wire [`DATA_WIDTH-1:0] rs1;
@@ -133,6 +129,9 @@ module cpu_top(
         .rs1(rs1),
         .rs2(rs2)
     );
+    
+  assign branch_a = rs1;
+  assign branch_b = rs2;
 
   //Multiplexers
   always @* begin

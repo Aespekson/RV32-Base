@@ -14,12 +14,12 @@ if ((signal) !== (value)) begin \
 `define DATA_WIDTH 32
 `define INST_WIDTH 32
 `define INST_MEM_DEPTH 32
+`define MEM_SIZE 1024
 `define NUM_REGISTER 32
 `define REGISTER_WIDTH 32
 `define REG_ADDR_WIDTH 5
 `define ALU_OP_WIDTH 7
 `define FUNCT7_WIDTH 7
-`define MEM_SIZE 1024
 
 // Branch opcodes. Conditional branch values match funct3.
 `define BRANCH_BEQ 3'b000 // Branch Equal

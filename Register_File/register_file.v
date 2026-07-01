@@ -9,8 +9,8 @@ module register_file(
   input wire [$clog2(`NUM_REGISTER)-1:0] rs1_addr,
   input wire [$clog2(`NUM_REGISTER)-1:0] rs2_addr,
   output reg [`DATA_WIDTH-1:0] rs1,
-  output reg [`DATA_WIDTH-1:0] rs2);
-
+  output reg [`DATA_WIDTH-1:0] rs2
+  );
 
   reg [`DATA_WIDTH-1:0] registers [`NUM_REGISTER-1:0];
   integer i;
